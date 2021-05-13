@@ -31,10 +31,10 @@ var PanelList = []Panel{
 		Title: widget.NewLabel("Breathing Exercises"),
 	},
 	{
-		Title: widget.NewLabel("Walk"),
+		Title: widget.NewLabel("Exercise"),
 	},
 	{
-		Title: widget.NewLabel("Hydrate!"),
+		Title: widget.NewLabel("Hydrate"),
 	},
 	{
 		Title: widget.NewLabel("Yoga"),

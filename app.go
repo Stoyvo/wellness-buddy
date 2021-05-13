@@ -51,7 +51,7 @@ func loadApp(win fyne.Window) {
 			return len(PanelList)
 		},
 		func() fyne.CanvasObject {
-			return widget.NewLabel("A longish name")
+			return widget.NewLabel("Breathing Exercises")//this has to be the longest panel label
 		},
 		func(id int, obj fyne.CanvasObject) {
 			obj.(*widget.Label).SetText(PanelList[id].Title.Text)

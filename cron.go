@@ -9,15 +9,15 @@ import (
 )
 
 func startJobs() {
-	// Call hydrateReminder
-	hydrateReminderJob := cron.New()
-	_, err := hydrateReminderJob.AddFunc("@every 10s", hydrateReminder)
+	// Call dailyChallenge at 2PM
+	dailyChallengeJob := cron.New()
+	_, err := dailyChallengeJob.AddFunc("0 14 * * 1-5", dailyChallenge)
 
 	if err != nil {
 		return
 	}
 
-	hydrateReminderJob.Start()
+	dailyChallengeJob.Start()
 
 	// Call breathingExercise every other weekday at 11AM
 	breathingExerciseJob := cron.New()
@@ -29,6 +29,26 @@ func startJobs() {
 
 	breathingExerciseJob.Start()
 
+	// Call take a walk once a week, on a wednesday at 3:30PM
+	takeWalkJob := cron.New()
+	_, err = takeWalkJob.AddFunc("30 15 * * 3", takeWalk)
+
+	if err != nil {
+		return
+	}
+
+	takeWalkJob.Start()
+
+	// Call hydrateReminder
+	hydrateReminderJob := cron.New()
+	_, err = hydrateReminderJob.AddFunc("@every 30m", hydrateReminder)
+
+	if err != nil {
+		return
+	}
+
+	hydrateReminderJob.Start()
+
 	// Call chairYoga twice a week at 1PM
 	chairYogaJob := cron.New()
 	_, err = chairYogaJob.AddFunc("0 13 * * 2,4", chairYoga)
@@ -38,6 +58,16 @@ func startJobs() {
 	}
 
 	chairYogaJob.Start()
+
+	// Call healthy snack action once a day, at 12:30
+	healthySnackJob := cron.New()
+	_, err = healthySnackJob.AddFunc("30 12 * * 1-5", healthySnack)
+
+	if err != nil {
+		return
+	}
+
+	healthySnackJob.Start()
 
 	// Call stretch at 10AM and 3PM each weekday
 	stretchJob := cron.New()
@@ -49,26 +79,6 @@ func startJobs() {
 
 	stretchJob.Start()
 
-	// Call dailyChallenge at 2PM
-	dailyChallengeJob := cron.New()
-	_, err = dailyChallengeJob.AddFunc("0 14 * * 1-5", dailyChallenge)
-
-	if err != nil {
-		return
-	}
-
-	dailyChallengeJob.Start()
-
-	// Call take a walk once a week, on a wednesday at 3:30PM
-	takeWalkJob := cron.New()
-	_, err = takeWalkJob.AddFunc("30 15 * * 3", takeWalk)
-
-	if err != nil {
-		return
-	}
-
-	takeWalkJob.Start()
-
 	// Call message a loved one action once a week, on a tuesday at 4:30PM
 	messageJokeJob := cron.New()
 	_, err = messageJokeJob.AddFunc("30 16 * * 2", messageJoke)
@@ -78,40 +88,6 @@ func startJobs() {
 	}
 
 	messageJokeJob.Start()
-
-	// Call healthy snack action once a day, at 12:30
-	healthySnackJob := cron.New()
-	_, err = healthySnackJob.AddFunc("30 12 * * 1-5", healthySnack)
-
-	if err != nil {
-		return
-	}
-
-	healthySnackJob.Start()
-}
-
-func hydrateReminder() {
-	//display os notification to drink, clicking on the notification should:
-	//open the app on the corresponding panel with button for 'done' or 'skip'
-	//add the point if pressed 'done'
-	//if 'skip' nothing should happen, cron should operate as usual
-	note := gosxnotifier.NewNotification("Go ahead and have a glass of water - your body will thank you!")
-	//Optionally, set a title
-	note.Title = "Wellness Buddy"
-	//Optionally, set a sound from a predefined set.
-	note.Sound = gosxnotifier.Default
-	//Optionally, set a group which ensures only one notification is ever shown replacing previous notification of same group id.
-	note.Group = "com.bounteous.wellness-buddy.hydration"
-	note.Link  = "com.bounteous.wellness-buddy"
-	//Then, push the notification
-	err := note.Push()
-
-	//If necessary, check error
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	//load the hydration panel in the app
 }
 
 func dailyChallenge() {
@@ -127,8 +103,6 @@ func dailyChallenge() {
 		note.Title = "Wellness Buddy"
 		//Optionally, set a sound from a predefined set.
 		note.Sound = gosxnotifier.Default
-		//Optionally, set a group which ensures only one notification is ever shown replacing previous notification of same group id.
-		note.Group = "com.bounteous.wellness-buddy.daily-challenge"
 		note.Link  = "com.bounteous.wellness-buddy"
 		//Then, push the notification
 		err := note.Push()
@@ -143,8 +117,6 @@ func dailyChallenge() {
 		note.Title = "Wellness Buddy"
 		//Optionally, set a sound from a predefined set.
 		note.Sound = gosxnotifier.Default
-		//Optionally, set a group which ensures only one notification is ever shown replacing previous notification of same group id.
-		note.Group = "com.bounteous.wellness-buddy.daily-challenge"
 		note.Link  = "com.bounteous.wellness-buddy"
 		//Then, push the notification
 		err := note.Push()
@@ -159,8 +131,6 @@ func dailyChallenge() {
 		note.Title = "Wellness Buddy"
 		//Optionally, set a sound from a predefined set.
 		note.Sound = gosxnotifier.Default
-		//Optionally, set a group which ensures only one notification is ever shown replacing previous notification of same group id.
-		note.Group = "com.bounteous.wellness-buddy.daily-challenge"
 		note.Link  = "com.bounteous.wellness-buddy"
 		//Then, push the notification
 		err := note.Push()
@@ -175,8 +145,6 @@ func dailyChallenge() {
 		note.Title = "Wellness Buddy"
 		//Optionally, set a sound from a predefined set.
 		note.Sound = gosxnotifier.Default
-		//Optionally, set a group which ensures only one notification is ever shown replacing previous notification of same group id.
-		note.Group = "com.bounteous.wellness-buddy.daily-challenge"
 		note.Link  = "com.bounteous.wellness-buddy"
 		//Then, push the notification
 		err := note.Push()
@@ -191,8 +159,6 @@ func dailyChallenge() {
 		note.Title = "Wellness Buddy"
 		//Optionally, set a sound from a predefined set.
 		note.Sound = gosxnotifier.Default
-		//Optionally, set a group which ensures only one notification is ever shown replacing previous notification of same group id.
-		note.Group = "com.bounteous.wellness-buddy.daily-challenge"
 		note.Link  = "com.bounteous.wellness-buddy"
 		//Then, push the notification
 		err := note.Push()
@@ -206,6 +172,7 @@ func dailyChallenge() {
 	}
 
 	//load the daily challenge panel in the app
+	navList.Select(1)
 }
 
 func breathingExercise() {
@@ -218,8 +185,6 @@ func breathingExercise() {
 	note.Title = "Wellness Buddy"
 	//Optionally, set a sound from a predefined set.
 	note.Sound = gosxnotifier.Default
-	//Optionally, set a group which ensures only one notification is ever shown replacing previous notification of same group id.
-	note.Group = "com.bounteous.wellness-buddy.breathing"
 	note.Link  = "com.bounteous.wellness-buddy"
 	//Then, push the notification
 	err := note.Push()
@@ -230,54 +195,7 @@ func breathingExercise() {
 	}
 
 	//load breathing panel in the app
-}
-
-func chairYoga() {
-	//display os notification to complete the chair yoga exercise, clicking on the notification should:
-	//open the app on the corresponding panel with the youtube link and a button for 'done'
-	//add the point if pressed 'done' and disable that button
-	//then, run cron for 2 hours which will re-enable the button
-	note := gosxnotifier.NewNotification("Check out this chair yoga exercise!")
-	//Optionally, set a title
-	note.Title = "Wellness Buddy"
-	//Optionally, set a sound from a predefined set.
-	note.Sound = gosxnotifier.Default
-	//Optionally, set a group which ensures only one notification is ever shown replacing previous notification of same group id.
-	note.Group = "com.bounteous.wellness-buddy.chair-yoga"
-	note.Link  = "com.bounteous.wellness-buddy"
-	//Then, push the notification
-	err := note.Push()
-
-	//If necessary, check error
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	//load chair yoga panel
-}
-
-func stretch() {
-	//display os notification to complete the stretch exercise, clicking on the notification should:
-	//open the app on the corresponding panel with the youtube link and a button for 'done'
-	//add the point if pressed 'done' and disable that button
-	//then, run cron for 2 hours which will re-enable the button
-	note := gosxnotifier.NewNotification("Stop and do some stretches - you know you want to!")
-	//Optionally, set a title
-	note.Title = "Wellness Buddy"
-	//Optionally, set a sound from a predefined set.
-	note.Sound = gosxnotifier.Default
-	//Optionally, set a group which ensures only one notification is ever shown replacing previous notification of same group id.
-	note.Group = "com.bounteous.wellness-buddy.stretch"
-	note.Link  = "com.bounteous.wellness-buddy"
-	//Then, push the notification
-	err := note.Push()
-
-	//If necessary, check error
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	//load stretch panel
+	navList.Select(2)
 }
 
 func takeWalk() {
@@ -291,8 +209,6 @@ func takeWalk() {
 	note.Title = "Wellness Buddy"
 	//Optionally, set a sound from a predefined set.
 	note.Sound = gosxnotifier.Default
-	//Optionally, set a group which ensures only one notification is ever shown replacing previous notification of same group id.
-	note.Group = "com.bounteous.wellness-buddy.walk"
 	note.Link  = "com.bounteous.wellness-buddy"
 	//Then, push the notification
 	err := note.Push()
@@ -303,20 +219,19 @@ func takeWalk() {
 	}
 
 	//load walk panel
+	navList.Select(3)
 }
 
-func messageJoke() {
-	//display os notification to message a joke to a loved one, clicking on the notification should:
-	//open the app on the corresponding panel with a joke pulled from https://icanhazdadjoke.com/api
-	//and a button for 'done'
-	//clicking the 'done' button will add the point
-	note := gosxnotifier.NewNotification("Reach out to a loved one, perhaps - with a joke?")
+func hydrateReminder() {
+	//display os notification to drink, clicking on the notification should:
+	//open the app on the corresponding panel with button for 'done' or 'skip'
+	//add the point if pressed 'done'
+	//if 'skip' nothing should happen, cron should operate as usual
+	note := gosxnotifier.NewNotification("Go ahead and have a glass of water - your body will thank you!")
 	//Optionally, set a title
 	note.Title = "Wellness Buddy"
 	//Optionally, set a sound from a predefined set.
 	note.Sound = gosxnotifier.Default
-	//Optionally, set a group which ensures only one notification is ever shown replacing previous notification of same group id.
-	note.Group = "com.bounteous.wellness-buddy.joke"
 	note.Link  = "com.bounteous.wellness-buddy"
 	//Then, push the notification
 	err := note.Push()
@@ -326,7 +241,31 @@ func messageJoke() {
 		fmt.Println(err.Error())
 	}
 
-	//load joke panel
+	//load the hydration panel in the app
+	navList.Select(4)
+}
+
+func chairYoga() {
+	//display os notification to complete the chair yoga exercise, clicking on the notification should:
+	//open the app on the corresponding panel with the youtube link and a button for 'done'
+	//add the point if pressed 'done' and disable that button
+	//then, run cron for 2 hours which will re-enable the button
+	note := gosxnotifier.NewNotification("Check out this chair yoga exercise!")
+	//Optionally, set a title
+	note.Title = "Wellness Buddy"
+	//Optionally, set a sound from a predefined set.
+	note.Sound = gosxnotifier.Default
+	note.Link  = "com.bounteous.wellness-buddy"
+	//Then, push the notification
+	err := note.Push()
+
+	//If necessary, check error
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	//load chair yoga panel
+	navList.Select(5)
 }
 
 func healthySnack() {
@@ -347,8 +286,6 @@ func healthySnack() {
 	note.Title = "Wellness Buddy"
 	//Optionally, set a sound from a predefined set.
 	note.Sound = gosxnotifier.Default
-	//Optionally, set a group which ensures only one notification is ever shown replacing previous notification of same group id.
-	note.Group = "com.bounteous.wellness-buddy.snacks"
 	note.Link  = "com.bounteous.wellness-buddy"
 	//Then, push the notification
 	err := note.Push()
@@ -359,4 +296,51 @@ func healthySnack() {
 	}
 
 	//load snack panel
+	navList.Select(6)
+}
+
+func stretch() {
+	//display os notification to complete the stretch exercise, clicking on the notification should:
+	//open the app on the corresponding panel with the youtube link and a button for 'done'
+	//add the point if pressed 'done' and disable that button
+	//then, run cron for 2 hours which will re-enable the button
+	note := gosxnotifier.NewNotification("Stop and do some stretches - you know you want to!")
+	//Optionally, set a title
+	note.Title = "Wellness Buddy"
+	//Optionally, set a sound from a predefined set.
+	note.Sound = gosxnotifier.Default
+	note.Link  = "com.bounteous.wellness-buddy"
+	//Then, push the notification
+	err := note.Push()
+
+	//If necessary, check error
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	//load summary panel
+	navList.Select(0)
+}
+
+func messageJoke() {
+	//display os notification to message a joke to a loved one, clicking on the notification should:
+	//open the app on the corresponding panel with a joke pulled from https://icanhazdadjoke.com/api
+	//and a button for 'done'
+	//clicking the 'done' button will add the point
+	note := gosxnotifier.NewNotification("Reach out to a loved one, perhaps - with a joke?")
+	//Optionally, set a title
+	note.Title = "Wellness Buddy"
+	//Optionally, set a sound from a predefined set.
+	note.Sound = gosxnotifier.Default
+	note.Link  = "com.bounteous.wellness-buddy"
+	//Then, push the notification
+	err := note.Push()
+
+	//If necessary, check error
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	//load summary panel
+	navList.Select(0)
 }

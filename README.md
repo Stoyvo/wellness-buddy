@@ -6,6 +6,10 @@ Practicing healthy habits on a daily basis for better physical and mental health
 2) Download required packages by running this command in terminal, in the project root: `go get .`
 3) Run project.
 
+### Releasing Build
+1) In terminal: `go get fyne.io/fyne/v2/cmd/fyne`
+2) Build the OSX Release: `./tools/build_osx.sh`
+
 ### Brought to you by:
 [Bounteous.com](https://Bounteous.com) - May 2021 Hackathon
 

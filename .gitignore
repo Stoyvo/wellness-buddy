@@ -15,3 +15,6 @@
 # vendor/
 .idea
 __cache
+*.app
+dist
+.DS_Store

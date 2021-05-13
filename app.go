@@ -11,6 +11,7 @@ import (
 )
 
 var content *fyne.Container
+var navList *widget.List
 
 type Panel struct {
 	Title	*widget.Label
@@ -46,7 +47,7 @@ var PanelList = []Panel{
 func loadApp(win fyne.Window) {
 	content = container.New(layout.NewVBoxLayout())
 
-	list := widget.NewList(func() int {
+	navList = widget.NewList(func() int {
 			return len(PanelList)
 		},
 		func() fyne.CanvasObject {
@@ -57,18 +58,18 @@ func loadApp(win fyne.Window) {
 		},
 	)
 
-	list.OnSelected = func(id int) {
+	navList.OnSelected = func(id int) {
 		content.Objects = PanelList[id].Obj()
 		content.Resize(content.Layout.MinSize(content.Objects))
 		content.Layout.Layout(content.Objects, content.Size())
 	}
 
 	// Initialize first panel
-	list.Select(0)
+	navList.Select(0)
 
 	win.SetContent(
 		container.NewBorder(
-			widget.NewLabel("Wellness Buddy"), nil, list, nil,
+			widget.NewLabel("Wellness Buddy"), nil, navList, nil,
 			content,
 		),
 	)

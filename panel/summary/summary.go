@@ -2,27 +2,17 @@ package summary
 
 import (
 	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 )
 
-type Summary struct {
-	name, totalPoints *widget.Label
-	btnExample 		  *widget.Button
-}
+func Load() []fyne.CanvasObject {
+	var objs []fyne.CanvasObject
 
-func (s *Summary) Load(win fyne.Window) fyne.CanvasObject {
-	s.name = widget.NewLabel("")
-	s.totalPoints = widget.NewLabel("")
+	objs = append(objs, widget.NewLabel("Summary"))
 
-	s.btnExample = widget.NewButton("CLICK ME", func() {
-	})
+	objs = append(objs, widget.NewLabel("500"))
 
-	buttons := container.NewHBox(
-		layout.NewSpacer(),
-		s.btnExample,
-	)
+	objs = append(objs, widget.NewButton("CLICK ME", func() {}))
 
-	return container.NewBorder(nil, buttons, nil, nil, nil)
+	return objs
 }

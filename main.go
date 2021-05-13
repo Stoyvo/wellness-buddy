@@ -5,6 +5,10 @@ import (
 	"fyne.io/fyne/v2/app"
 )
 
+func init() {
+	startJobs()
+}
+
 func main() {
 	a := app.NewWithID("com.bounteous.wellness-buddy")
 	w := a.NewWindow("Wellness Buddy")

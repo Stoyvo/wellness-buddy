@@ -1,4 +1,4 @@
-package panel
+package summary
 
 import (
 	"fyne.io/fyne/v2"
@@ -7,11 +7,9 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-var SummaryPanel *Summary
-
 type Summary struct {
 	name, totalPoints *widget.Label
-	btnExample *widget.Button
+	btnExample 		  *widget.Button
 }
 
 func (s *Summary) Load(win fyne.Window) fyne.CanvasObject {
@@ -19,12 +17,12 @@ func (s *Summary) Load(win fyne.Window) fyne.CanvasObject {
 	s.totalPoints = widget.NewLabel("")
 
 	s.btnExample = widget.NewButton("CLICK ME", func() {
-
 	})
+
 	buttons := container.NewHBox(
 		layout.NewSpacer(),
 		s.btnExample,
 	)
 
-	container.NewBorder(nil, buttons, nil, nil, nil)
+	return container.NewBorder(nil, buttons, nil, nil, nil)
 }

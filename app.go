@@ -5,7 +5,7 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 
-	"github.com/stoyvo/wellness-buddy/panel"
+	"github.com/stoyvo/wellness-buddy/panel/summary"
 )
 
 type Panel struct {
@@ -17,10 +17,10 @@ var PanelList = []Panel{
 	{
 		widget.NewLabel("Summary"),
 		func(win fyne.Window) fyne.CanvasObject {
-			var obj = panel.Summary()
-			return obj.Load()
+			var obj summary.Summary
+			return obj.Load(win)
 		},
-		},
+	},
 	{
 		Title: widget.NewLabel("Daily Challenge"),
 	},
@@ -51,8 +51,8 @@ func loadApp(win fyne.Window) {
 		func(id int, obj fyne.CanvasObject) {
 			obj.(*widget.Label).SetText(PanelList[id].Title.Text)
 		})
+
 	list.OnSelected = func(id int) {
-		//reflect.ValueOf(PanelList[id].Obj).MethodByName("Load").Call([]reflect.Value{}) // How do we pass "win"?
 		content := PanelList[id].Obj(win)
 		win.SetContent(
 			container.NewBorder(

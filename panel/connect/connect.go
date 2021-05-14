@@ -3,7 +3,9 @@ package connect
 import (
 	"fmt"
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/widget"
+	"github.com/stoyvo/wellness-buddy/assets"
 )
 
 var Active bool
@@ -11,6 +13,12 @@ var Joke string
 
 func Load(content *fyne.Container) []fyne.CanvasObject {
 	var objs []fyne.CanvasObject
+
+
+
+	jokeImg := canvas.NewImageFromResource(assets.ResourceJokePng)
+	jokeImg.FillMode = canvas.ImageFillOriginal
+	objs = append(objs, jokeImg)
 
 	objs = append(objs, widget.NewLabel("Time to connect with a loved one!"))
 

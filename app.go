@@ -83,7 +83,10 @@ func loadApp(win fyne.Window) {
 
 	win.SetContent(
 		container.NewBorder(
-			widget.NewLabel("Wellness Buddy"), nil, navList, nil,
+			widget.NewLabel("Wellness Buddy"),
+			widget.NewLabelWithStyle("Copyright Bounteous 2021", fyne.TextAlignCenter, fyne.TextStyle{}),
+			navList,
+			nil,
 			content,
 		),
 	)

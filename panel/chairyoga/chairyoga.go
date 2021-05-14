@@ -2,8 +2,12 @@ package chairyoga
 
 import (
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/canvas"
+	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
+	"github.com/stoyvo/wellness-buddy/assets"
 	"net/url"
+	"time"
 )
 
 var Active bool
@@ -41,6 +45,28 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 			content.Layout.Layout(content.Objects, content.Size())
 		}))
 	}
+
+	imgContainer := container.NewCenter()
+	var imgFrames = []*canvas.Image{
+		canvas.NewImageFromResource(assets.ResourceChairyoga1Png),
+		canvas.NewImageFromResource(assets.ResourceChairyoga2Png),
+	}
+	totalFrames := len(imgFrames)
+	go func() {
+		var i int
+		for {
+			if i >= totalFrames {
+				i=0
+			}
+			imgFrames[i].FillMode = canvas.ImageFillOriginal
+			imgContainer.Objects = []fyne.CanvasObject{imgFrames[i]}
+			imgContainer.Layout.Layout(imgContainer.Objects, imgContainer.Size())
+			content.Refresh()
+			time.Sleep(1 * time.Second)
+			i++
+		}
+	}()
+	objs = append(objs, imgContainer)
 
 	return objs
 }

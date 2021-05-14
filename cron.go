@@ -20,7 +20,7 @@ import (
 func startJobs() {
 	// Call dailyChallenge at 2PM
 	dailyChallengeJob := cron.New()
-	_, err := dailyChallengeJob.AddFunc("13 16 * * 1-5", dailyChallengeAction)
+	_, err := dailyChallengeJob.AddFunc("00 14 * * 1-5", dailyChallengeAction)
 
 	if err != nil {
 		return
@@ -30,7 +30,7 @@ func startJobs() {
 
 	// Call breathingExercise every other weekday at 11AM
 	breathingExerciseJob := cron.New()
-	_, err = breathingExerciseJob.AddFunc("14 16 * * 1-5", breathingExerciseAction)
+	_, err = breathingExerciseJob.AddFunc("00 11 * * 1-5/2", breathingExerciseAction)
 
 	if err != nil {
 		return
@@ -70,7 +70,7 @@ func startJobs() {
 
 	// Call chairYoga twice a week at 1PM
 	chairYogaJob := cron.New()
-	_, err = chairYogaJob.AddFunc("26 16 * * 1-5", chairYogaAction)
+	_, err = chairYogaJob.AddFunc("00 13 * * 1, 5", chairYogaAction)
 
 	if err != nil {
 		return
@@ -200,6 +200,7 @@ func dailyChallengeAction() {
 
 	//load the daily challenge panel in the app
 	dailychallenge.ChallengeAction = challengeText
+	navList.Unselect(1)
 	navList.Select(1)
 }
 
@@ -224,6 +225,7 @@ func breathingExerciseAction() {
 
 	//load breathing exercises panel in the app
 	breathingexercises.Active = true
+	navList.Unselect(2)
 	navList.Select(2)
 }
 
@@ -249,6 +251,7 @@ func takeWalkAction() {
 
 	//load exercise panel
 	exercise.TakeWalk = true
+	navList.Unselect(3)
 	navList.Select(3)
 }
 
@@ -274,6 +277,7 @@ func stretchAction() {
 
 	//load exercise panel
 	exercise.Active = true
+	navList.Unselect(3)
 	navList.Select(3)
 }
 
@@ -298,6 +302,7 @@ func hydrateReminderAction() {
 
 	//load the hydration panel in the app
 	hydrate.Active = true
+	navList.Unselect(4)
 	navList.Select(4)
 }
 
@@ -322,6 +327,7 @@ func chairYogaAction() {
 
 	//load chair yoga panel
 	chairyoga.Active = true
+	navList.Unselect(5)
 	navList.Select(5)
 }
 
@@ -368,6 +374,7 @@ func healthySnackAction() {
 	//load snack panel
 	snacks.Active = true
 	snacks.Snack = selectedSnack
+	navList.Unselect(6)
 	navList.Select(6)
 }
 
@@ -410,6 +417,7 @@ func messageJokeAction() {
 	//load connect panel
 	connect.Active = true
 	connect.Joke = joke
+	navList.Unselect(7)
 	navList.Select(7)
 }
 
@@ -417,5 +425,10 @@ func ondemandJokeAction() {
 	if !connect.Active { //if currently not completing other cron action
 		joke := fetchDadJoke()
 		connect.Joke = joke
+
+		if currentNavId == 7 { // if already on the panel
+			navList.Unselect(7)
+			navList.Select(7)
+		}
 	}
 }

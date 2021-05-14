@@ -17,6 +17,7 @@ import (
 
 var content *fyne.Container
 var navList *widget.List
+var currentNavId int
 
 type Panel struct {
 	Title	*widget.Label
@@ -73,6 +74,8 @@ func loadApp(win fyne.Window) {
 	)
 
 	navList.OnSelected = func(id int) {
+		currentNavId = id
+
 		if id == 6 && !snacks.Active {
 			//randomize healthy snack and show without buttons
 			snacks.Snack = randomizeSnack()

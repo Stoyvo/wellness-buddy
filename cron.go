@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/deckarep/gosx-notifier"
 	"github.com/robfig/cron/v3"
+	"github.com/stoyvo/wellness-buddy/panel/dailychallenge"
 	"io/ioutil"
 	"math/rand"
 	"net/http"
@@ -13,7 +14,7 @@ import (
 func startJobs() {
 	// Call dailyChallenge at 2PM
 	dailyChallengeJob := cron.New()
-	_, err := dailyChallengeJob.AddFunc("0 14 * * 1-5", dailyChallenge)
+	_, err := dailyChallengeJob.AddFunc("0 14 * * 1-5", dailyChallengeAction)
 
 	if err != nil {
 		return
@@ -23,7 +24,7 @@ func startJobs() {
 
 	// Call breathingExercise every other weekday at 11AM
 	breathingExerciseJob := cron.New()
-	_, err = breathingExerciseJob.AddFunc("0 11 * * 1-5/2", breathingExercise)
+	_, err = breathingExerciseJob.AddFunc("0 11 * * 1-5/2", breathingExerciseAction)
 
 	if err != nil {
 		return
@@ -33,7 +34,7 @@ func startJobs() {
 
 	// Call take a walk once a week, on a wednesday at 3:30PM
 	takeWalkJob := cron.New()
-	_, err = takeWalkJob.AddFunc("30 15 * * 3", takeWalk)
+	_, err = takeWalkJob.AddFunc("30 15 * * 3", takeWalkAction)
 
 	if err != nil {
 		return
@@ -43,7 +44,7 @@ func startJobs() {
 
 	// Call hydrateReminder
 	hydrateReminderJob := cron.New()
-	_, err = hydrateReminderJob.AddFunc("@every 30m", hydrateReminder)
+	_, err = hydrateReminderJob.AddFunc("@every 30m", hydrateReminderAction)
 
 	if err != nil {
 		return
@@ -53,7 +54,7 @@ func startJobs() {
 
 	// Call chairYoga twice a week at 1PM
 	chairYogaJob := cron.New()
-	_, err = chairYogaJob.AddFunc("0 13 * * 2,4", chairYoga)
+	_, err = chairYogaJob.AddFunc("0 13 * * 2,4", chairYogaAction)
 
 	if err != nil {
 		return
@@ -63,7 +64,7 @@ func startJobs() {
 
 	// Call healthy snack action once a day, at 12:30
 	healthySnackJob := cron.New()
-	_, err = healthySnackJob.AddFunc("30 12 * * 1-5", healthySnack)
+	_, err = healthySnackJob.AddFunc("30 12 * * 1-5", healthySnackAction)
 
 	if err != nil {
 		return
@@ -73,7 +74,7 @@ func startJobs() {
 
 	// Call stretch at 10AM and 3PM each weekday
 	stretchJob := cron.New()
-	_, err = stretchJob.AddFunc("0 10,15 * * 1-5", stretch)
+	_, err = stretchJob.AddFunc("0 10,15 * * 1-5", stretchAction)
 
 	if err != nil {
 		return
@@ -83,7 +84,7 @@ func startJobs() {
 
 	// Call message a loved one action once a week, on a tuesday at 4:30PM
 	messageJokeJob := cron.New()
-	_, err = messageJokeJob.AddFunc("11 20 * * 4", messageJoke)
+	_, err = messageJokeJob.AddFunc("11 20 * * 4", messageJokeAction)
 
 	if err != nil {
 		return
@@ -92,15 +93,18 @@ func startJobs() {
 	messageJokeJob.Start()
 }
 
-func dailyChallenge() {
+func dailyChallengeAction() {
 	//display os notification to complete the challenge, clicking on the notification should:
 	//open the app on the corresponding panel with button for 'done' or 'skip'
 	//add the point if pressed 'done'
 	//if 'skip' nothing should happen, cron should operate as usual
+	var challengeText string
 	var day = int(time.Now().Weekday())
+
 	switch challenge := day; challenge {
 	case 1:
-		note := gosxnotifier.NewNotification("Take a picture of a tree. Feel free to share it on #opt_outside")
+		challengeText = "Take a picture of a tree. Feel free to share it on #opt_outside"
+		note := gosxnotifier.NewNotification(challengeText)
 		//Optionally, set a title
 		note.Title = "Wellness Buddy"
 		//Optionally, set a sound from a predefined set.
@@ -114,7 +118,8 @@ func dailyChallenge() {
 			fmt.Println(err.Error())
 		}
 	case 2:
-		note := gosxnotifier.NewNotification("Have a burnout exercise (1 minute of squats or jumping jacks). Feel free to share your experience on #b_active")
+		challengeText = "Have a burnout exercise (1 minute of squats or jumping jacks). Feel free to share your experience on #b_active"
+		note := gosxnotifier.NewNotification(challengeText)
 		//Optionally, set a title
 		note.Title = "Wellness Buddy"
 		//Optionally, set a sound from a predefined set.
@@ -128,7 +133,8 @@ func dailyChallenge() {
 			fmt.Println(err.Error())
 		}
 	case 3:
-		note := gosxnotifier.NewNotification("Have a jabs exercise. Feel free to share your experience #b_active")
+		challengeText = "Have a jabs exercise. Feel free to share your experience #b_active"
+		note := gosxnotifier.NewNotification(challengeText)
 		//Optionally, set a title
 		note.Title = "Wellness Buddy"
 		//Optionally, set a sound from a predefined set.
@@ -142,7 +148,8 @@ func dailyChallenge() {
 			fmt.Println(err.Error())
 		}
 	case 4:
-		note := gosxnotifier.NewNotification("Take a picture of a bird. Feel free to share it on #photography")
+		challengeText = "Take a picture of a bird. Feel free to share it on #photography"
+		note := gosxnotifier.NewNotification(challengeText)
 		//Optionally, set a title
 		note.Title = "Wellness Buddy"
 		//Optionally, set a sound from a predefined set.
@@ -156,7 +163,8 @@ func dailyChallenge() {
 			fmt.Println(err.Error())
 		}
 	case 5:
-		note := gosxnotifier.NewNotification("Take a picture of a fire hydrant. Feel free to share it on #photography")
+		challengeText = "Take a picture of a fire hydrant. Feel free to share it on #photography"
+		note := gosxnotifier.NewNotification(challengeText)
 		//Optionally, set a title
 		note.Title = "Wellness Buddy"
 		//Optionally, set a sound from a predefined set.
@@ -175,9 +183,12 @@ func dailyChallenge() {
 
 	//load the daily challenge panel in the app
 	navList.Select(1)
+	content.Objects = dailychallenge.AddChallengeInfo(challengeText)
+	content.Resize(content.Layout.MinSize(content.Objects))
+	content.Layout.Layout(content.Objects, content.Size())
 }
 
-func breathingExercise() {
+func breathingExerciseAction() {
 	//display os notification to complete the breathing exercise, clicking on the notification should:
 	//open the app on the corresponding panel with the youtube link and a button for 'done'
 	//add the point if pressed 'done' and disable that button
@@ -200,7 +211,7 @@ func breathingExercise() {
 	navList.Select(2)
 }
 
-func takeWalk() {
+func takeWalkAction() {
 	//display os notification to take a walk, clicking on the notification should:
 	//open the app on the corresponding panel with a button for 'start'
 	//clicking the 'start' button will display/ enable a 'stop' button
@@ -224,7 +235,7 @@ func takeWalk() {
 	navList.Select(3)
 }
 
-func hydrateReminder() {
+func hydrateReminderAction() {
 	//display os notification to drink, clicking on the notification should:
 	//open the app on the corresponding panel with button for 'done' or 'skip'
 	//add the point if pressed 'done'
@@ -247,7 +258,7 @@ func hydrateReminder() {
 	navList.Select(4)
 }
 
-func chairYoga() {
+func chairYogaAction() {
 	//display os notification to complete the chair yoga exercise, clicking on the notification should:
 	//open the app on the corresponding panel with the youtube link and a button for 'done'
 	//add the point if pressed 'done' and disable that button
@@ -270,7 +281,7 @@ func chairYoga() {
 	navList.Select(5)
 }
 
-func healthySnack() {
+func healthySnackAction() {
 	snacks := make([]string, 0)
 	snacks = append(snacks,
 		"a Baby Carrot",
@@ -301,7 +312,7 @@ func healthySnack() {
 	navList.Select(6)
 }
 
-func stretch() {
+func stretchAction() {
 	//display os notification to complete the stretch exercise, clicking on the notification should:
 	//open the app on the corresponding panel with the youtube link and a button for 'done'
 	//add the point if pressed 'done' and disable that button
@@ -324,7 +335,7 @@ func stretch() {
 	navList.Select(0)
 }
 
-func messageJoke() {
+func messageJokeAction() {
 	client := &http.Client{}
 	req, _ := http.NewRequest("GET", "https://icanhazdadjoke.com/", nil)
 	req.Header.Set("User-Agent", "Wellness Buddy (https://github.com/Stoyvo/wellness-buddy)")//required header

@@ -183,7 +183,8 @@ func dailyChallengeAction() {
 
 	//load the daily challenge panel in the app
 	navList.Select(1)
-	content.Objects = dailychallenge.AddChallengeInfo(challengeText)
+	dailychallenge.ChallengeAction = challengeText
+	content.Objects = dailychallenge.Load()
 	content.Resize(content.Layout.MinSize(content.Objects))
 	content.Layout.Layout(content.Objects, content.Size())
 }

@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"github.com/deckarep/gosx-notifier"
 	"github.com/robfig/cron/v3"
+	"io/ioutil"
 	"math/rand"
+	"net/http"
 	"time"
 )
 
@@ -81,7 +83,7 @@ func startJobs() {
 
 	// Call message a loved one action once a week, on a tuesday at 4:30PM
 	messageJokeJob := cron.New()
-	_, err = messageJokeJob.AddFunc("30 16 * * 2", messageJoke)
+	_, err = messageJokeJob.AddFunc("11 20 * * 4", messageJoke)
 
 	if err != nil {
 		return
@@ -323,18 +325,32 @@ func stretch() {
 }
 
 func messageJoke() {
+	client := &http.Client{}
+	req, _ := http.NewRequest("GET", "https://icanhazdadjoke.com/", nil)
+	req.Header.Set("User-Agent", "Wellness Buddy (https://github.com/Stoyvo/wellness-buddy)")//required header
+	req.Header.Set("Accept", "text/plain")
+	res, _ := client.Do(req)
+	responseData, err := ioutil.ReadAll(res.Body)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	//display os notification to message a joke to a loved one, clicking on the notification should:
 	//open the app on the corresponding panel with a joke pulled from https://icanhazdadjoke.com/api
 	//and a button for 'done'
 	//clicking the 'done' button will add the point
-	note := gosxnotifier.NewNotification("Reach out to a loved one, perhaps - with a joke?")
+	joke := string(responseData)
+	fmt.Println(joke)
+	message := fmt.Sprint("Reach out to a loved one, perhaps - with a joke? \r\n \"", joke, "\"")
+	note := gosxnotifier.NewNotification(message)
 	//Optionally, set a title
 	note.Title = "Wellness Buddy"
 	//Optionally, set a sound from a predefined set.
 	note.Sound = gosxnotifier.Default
 	note.Link  = "com.bounteous.wellness-buddy"
 	//Then, push the notification
-	err := note.Push()
+	err = note.Push()
 
 	//If necessary, check error
 	if err != nil {

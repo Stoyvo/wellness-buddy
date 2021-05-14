@@ -127,6 +127,7 @@ func dailyChallengeAction() {
 		//Optionally, set a sound from a predefined set.
 		note.Sound = gosxnotifier.Default
 		note.Link  = "com.bounteous.wellness-buddy"
+		note.AppIcon = "logo.png"
 		//Then, push the notification
 		err := note.Push()
 
@@ -142,6 +143,7 @@ func dailyChallengeAction() {
 		//Optionally, set a sound from a predefined set.
 		note.Sound = gosxnotifier.Default
 		note.Link  = "com.bounteous.wellness-buddy"
+		note.AppIcon = "logo.png"
 		//Then, push the notification
 		err := note.Push()
 
@@ -157,6 +159,7 @@ func dailyChallengeAction() {
 		//Optionally, set a sound from a predefined set.
 		note.Sound = gosxnotifier.Default
 		note.Link  = "com.bounteous.wellness-buddy"
+		note.AppIcon = "logo.png"
 		//Then, push the notification
 		err := note.Push()
 
@@ -172,6 +175,7 @@ func dailyChallengeAction() {
 		//Optionally, set a sound from a predefined set.
 		note.Sound = gosxnotifier.Default
 		note.Link  = "com.bounteous.wellness-buddy"
+		note.AppIcon = "logo.png"
 		//Then, push the notification
 		err := note.Push()
 
@@ -187,6 +191,7 @@ func dailyChallengeAction() {
 		//Optionally, set a sound from a predefined set.
 		note.Sound = gosxnotifier.Default
 		note.Link  = "com.bounteous.wellness-buddy"
+		note.AppIcon = "logo.png"
 		//Then, push the notification
 		err := note.Push()
 
@@ -215,6 +220,7 @@ func breathingExerciseAction() {
 	//Optionally, set a sound from a predefined set.
 	note.Sound = gosxnotifier.Default
 	note.Link  = "com.bounteous.wellness-buddy"
+	note.AppIcon = "logo.png"
 	//Then, push the notification
 	err := note.Push()
 
@@ -241,6 +247,7 @@ func takeWalkAction() {
 	//Optionally, set a sound from a predefined set.
 	note.Sound = gosxnotifier.Default
 	note.Link  = "com.bounteous.wellness-buddy"
+	note.AppIcon = "logo.png"
 	//Then, push the notification
 	err := note.Push()
 
@@ -267,6 +274,7 @@ func stretchAction() {
 	//Optionally, set a sound from a predefined set.
 	note.Sound = gosxnotifier.Default
 	note.Link  = "com.bounteous.wellness-buddy"
+	note.AppIcon = "logo.png"
 	//Then, push the notification
 	err := note.Push()
 
@@ -292,6 +300,7 @@ func hydrateReminderAction() {
 	//Optionally, set a sound from a predefined set.
 	note.Sound = gosxnotifier.Default
 	note.Link  = "com.bounteous.wellness-buddy"
+	note.AppIcon = "logo.png"
 	//Then, push the notification
 	err := note.Push()
 
@@ -317,6 +326,7 @@ func chairYogaAction() {
 	//Optionally, set a sound from a predefined set.
 	note.Sound = gosxnotifier.Default
 	note.Link  = "com.bounteous.wellness-buddy"
+	note.AppIcon = "logo.png"
 	//Then, push the notification
 	err := note.Push()
 
@@ -363,6 +373,7 @@ func healthySnackAction() {
 	//Optionally, set a sound from a predefined set.
 	note.Sound = gosxnotifier.Default
 	note.Link  = "com.bounteous.wellness-buddy"
+	note.AppIcon = "logo.png"
 	//Then, push the notification
 	err := note.Push()
 
@@ -406,6 +417,7 @@ func messageJokeAction() {
 	//Optionally, set a sound from a predefined set.
 	note.Sound = gosxnotifier.Default
 	note.Link  = "com.bounteous.wellness-buddy"
+	note.AppIcon = "logo.png"
 	//Then, push the notification
 	err := note.Push()
 

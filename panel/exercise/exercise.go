@@ -38,6 +38,10 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	if Active {
 		objs = append(objs, widget.NewButton("Done!", func() {
 			//add a point to the user and reset the panel
+			app.Preferences().SetInt(
+				"exercise",
+				app.Preferences().Int("exercise") + 1,
+			)
 			Active = false
 			objs = fetchDefaultObjs()
 			content.Objects = objs

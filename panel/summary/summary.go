@@ -29,7 +29,10 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 			widget.NewCard(
 				"Exercise",
 				"",
-				widget.NewLabelWithStyle("123", fyne.TextAlignCenter, fyne.TextStyle{Bold: true}),
+				widget.NewLabelWithStyle(
+					strconv.Itoa(app.Preferences().Int("exercise")),
+					fyne.TextAlignCenter, fyne.TextStyle{Bold: true},
+				),
 			),
 			widget.NewCard(
 				"Hydrate",

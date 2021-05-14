@@ -73,13 +73,9 @@ func loadApp(win fyne.Window) {
 	)
 
 	navList.OnSelected = func(id int) {
-		if id == 6 && snacks.Snack == "" {
+		if id == 6 && !snacks.Active {
 			//randomize healthy snack and show without buttons
 			snacks.Snack = randomizeSnack()
-		}
-
-		if id == 7 && connect.Joke == "" {
-			connect.Joke = fetchDadJoke()
 		}
 
 		content.Objects = PanelList[id].Obj(App, content)

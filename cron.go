@@ -97,6 +97,17 @@ func startJobs() {
 	}
 
 	messageJokeJob.Start()
+
+	ondemandJokeAction()
+	// Call ondemand joke renewal
+	ondemandJokeJob := cron.New()
+	_, err = ondemandJokeJob.AddFunc("@every 5m", ondemandJokeAction)
+
+	if err != nil {
+		return
+	}
+
+	ondemandJokeJob.Start()
 }
 
 func dailyChallengeAction() {
@@ -317,11 +328,18 @@ func chairYogaAction() {
 func randomizeSnack() string {
 	snacksOpts := make([]string, 0)
 	snacksOpts = append(snacksOpts,
-		"a Baby Carrot",
-		"a Celery stick",
-		"an Apple",
-		"some Buckwheat",
-		"a Cucumber")
+		"some strawberries",
+		"some Greek yogurt",
+		"a banana",
+		"a granola bar",
+		"some kale chips",
+		"some trail mix",
+		"some dark chocolate",
+		"a baby carrot",
+		"a celery stick",
+		"an apple",
+		"some buckwheat",
+		"a cucumber")
 
 	return snacksOpts[rand.Intn(len(snacksOpts))]
 }
@@ -393,4 +411,11 @@ func messageJokeAction() {
 	connect.Active = true
 	connect.Joke = joke
 	navList.Select(7)
+}
+
+func ondemandJokeAction() {
+	if !connect.Active { //if currently not completing other cron action
+		joke := fetchDadJoke()
+		connect.Joke = joke
+	}
 }

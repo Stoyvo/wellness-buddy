@@ -20,7 +20,7 @@ var navList *widget.List
 
 type Panel struct {
 	Title	*widget.Label
-	Obj		func() []fyne.CanvasObject
+	Obj		func(content *fyne.Container) []fyne.CanvasObject
 }
 
 var PanelList = []Panel{
@@ -65,7 +65,7 @@ func loadApp(win fyne.Window) {
 			return len(PanelList)
 		},
 		func() fyne.CanvasObject {
-			return widget.NewLabel("Breathing Exercises")//this has to be the longest panel label
+			return widget.NewLabel("Breathing Exercises") //this has to be the longest panel label
 		},
 		func(id int, obj fyne.CanvasObject) {
 			obj.(*widget.Label).SetText(PanelList[id].Title.Text)
@@ -73,7 +73,7 @@ func loadApp(win fyne.Window) {
 	)
 
 	navList.OnSelected = func(id int) {
-		content.Objects = PanelList[id].Obj()
+		content.Objects = PanelList[id].Obj(content)
 		content.Resize(content.Layout.MinSize(content.Objects))
 		content.Layout.Layout(content.Objects, content.Size())
 	}

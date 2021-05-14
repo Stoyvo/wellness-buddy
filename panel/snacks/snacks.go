@@ -9,7 +9,7 @@ import (
 var Active bool
 var Snack string
 
-func Load() []fyne.CanvasObject {
+func Load(content *fyne.Container) []fyne.CanvasObject {
 	var objs []fyne.CanvasObject
 
 	objs = append(objs, widget.NewLabel("Time for a healthy snack!"))

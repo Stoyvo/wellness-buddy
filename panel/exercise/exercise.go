@@ -8,11 +8,11 @@ import (
 	"time"
 )
 
-var Active bool
-var TakeWalk bool
+var Active = true
+var TakeWalk = true
 var ticker *time.Ticker
 
-func Load() []fyne.CanvasObject {
+func Load(content *fyne.Container) []fyne.CanvasObject {
 	var objs []fyne.CanvasObject
 	var StopTicker = false
 
@@ -42,7 +42,8 @@ func Load() []fyne.CanvasObject {
 				case <-ticker.C:
 					fmt.Println(tickerStart)
 					message := fmt.Sprint("Timer: \r\n", tickerStart)
-					objs = append(objs, widget.NewLabel(message))
+					content.Objects = append(objs, widget.NewLabel(message))
+					content.Refresh()
 					tickerStart++
 				}
 			}

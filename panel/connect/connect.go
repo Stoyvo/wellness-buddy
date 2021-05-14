@@ -9,7 +9,7 @@ import (
 var Active bool
 var Joke string
 
-func Load() []fyne.CanvasObject {
+func Load(content *fyne.Container) []fyne.CanvasObject {
 	var objs []fyne.CanvasObject
 
 	objs = append(objs, widget.NewLabel("Time to connect with a loved one!"))

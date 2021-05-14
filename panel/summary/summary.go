@@ -6,7 +6,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func Load() []fyne.CanvasObject {
+func Load(content *fyne.Container) []fyne.CanvasObject {
 	var objs []fyne.CanvasObject
 
 	objs = append(objs, widget.NewLabelWithStyle("Summary", fyne.TextAlignCenter, fyne.TextStyle{Bold: true}))

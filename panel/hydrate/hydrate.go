@@ -7,7 +7,7 @@ import (
 
 var Active bool
 
-func Load() []fyne.CanvasObject {
+func Load(content *fyne.Container) []fyne.CanvasObject {
 	var objs []fyne.CanvasObject
 
 	objs = append(objs, widget.NewLabel("Remember to Hydrate"))

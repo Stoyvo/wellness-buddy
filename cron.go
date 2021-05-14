@@ -90,7 +90,7 @@ func startJobs() {
 
 	// Call message a loved one action once a week, on a tuesday at 4:30PM
 	messageJokeJob := cron.New()
-	_, err = messageJokeJob.AddFunc("02 16 * * 5", messageJokeAction)
+	_, err = messageJokeJob.AddFunc("30 16 * * 2", messageJokeAction)
 
 	if err != nil {
 		return

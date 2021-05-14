@@ -20,7 +20,7 @@ import (
 func startJobs() {
 	// Call dailyChallenge at 2PM
 	dailyChallengeJob := cron.New()
-	_, err := dailyChallengeJob.AddFunc("00 14 * * 1-5", dailyChallengeAction)
+	_, err := dailyChallengeJob.AddFunc("13 16 * * 1-5", dailyChallengeAction)
 
 	if err != nil {
 		return
@@ -30,7 +30,7 @@ func startJobs() {
 
 	// Call breathingExercise every other weekday at 11AM
 	breathingExerciseJob := cron.New()
-	_, err = breathingExerciseJob.AddFunc("0 11 * * 1-5/2", breathingExerciseAction)
+	_, err = breathingExerciseJob.AddFunc("14 16 * * 1-5", breathingExerciseAction)
 
 	if err != nil {
 		return
@@ -70,7 +70,7 @@ func startJobs() {
 
 	// Call chairYoga twice a week at 1PM
 	chairYogaJob := cron.New()
-	_, err = chairYogaJob.AddFunc("0 13 * * 2,4", chairYogaAction)
+	_, err = chairYogaJob.AddFunc("26 16 * * 1-5", chairYogaAction)
 
 	if err != nil {
 		return

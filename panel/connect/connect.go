@@ -14,11 +14,12 @@ var Joke string
 func fetchDefaultObjs() []fyne.CanvasObject{
 	var objs []fyne.CanvasObject
 
+	objs = append(objs, widget.NewLabel("Time to connect with a loved one!"))
+
 	jokeImg := canvas.NewImageFromResource(assets.ResourceJokePng)
 	jokeImg.FillMode = canvas.ImageFillOriginal
 	objs = append(objs, jokeImg)
 
-	objs = append(objs, widget.NewLabel("Time to connect with a loved one!"))
 
 	return objs
 }

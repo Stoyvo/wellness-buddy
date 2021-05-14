@@ -11,8 +11,23 @@ import (
 )
 
 var Active bool
+var doneBtn *widget.Button
+var skipBtn *widget.Button
 
-func fetchDefaultObjs() []fyne.CanvasObject{
+func init() {
+	doneBtn = widget.NewButton("Done!", hideBtns)
+	doneBtn.Hidden = true
+	skipBtn = widget.NewButton("Skip!", hideBtns)
+	skipBtn.Hidden = true
+}
+
+func hideBtns() {
+	Active = false
+	doneBtn.Hide()
+	skipBtn.Hide()
+}
+
+func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	var objs []fyne.CanvasObject
 
 	objs = append(objs, widget.NewLabel("Chair Yoga"))
@@ -20,30 +35,16 @@ func fetchDefaultObjs() []fyne.CanvasObject{
 	u, _ := url.Parse("https://www.youtube.com/watch?v=m4t9nCW3630")
 	objs = append(objs, widget.NewHyperlink("Watch the \"10 Minute Chair Yoga Practice\" video on YouTube", u))
 
-	return objs
-}
-
-func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
-	objs := fetchDefaultObjs()
+	objs = append(objs, doneBtn)
+	objs = append(objs, skipBtn)
 
 	//uncomment for Chair Yoga Demo
 	//Active = true
 
 	if Active {
-		objs = append(objs, widget.NewButton("Done!", func() {
-			//add a point to the user and reset the panel
-			Active = false
-			objs = fetchDefaultObjs()
-			content.Objects = objs
-			content.Layout.Layout(content.Objects, content.Size())
-		}))
-		objs = append(objs, widget.NewButton("Skip", func() {
-			//dismiss the action by resetting the panel
-			Active = false
-			objs = fetchDefaultObjs()
-			content.Objects = objs
-			content.Layout.Layout(content.Objects, content.Size())
-		}))
+		doneBtn.Show()
+		skipBtn.Show()
+		content.Refresh()
 	}
 
 	imgContainer := container.NewCenter()

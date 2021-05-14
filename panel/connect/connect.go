@@ -11,10 +11,8 @@ import (
 var Active bool
 var Joke string
 
-func Load(content *fyne.Container) []fyne.CanvasObject {
+func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	var objs []fyne.CanvasObject
-
-
 
 	jokeImg := canvas.NewImageFromResource(assets.ResourceJokePng)
 	jokeImg.FillMode = canvas.ImageFillOriginal
@@ -29,7 +27,10 @@ func Load(content *fyne.Container) []fyne.CanvasObject {
 
 	if Active {
 		objs = append(objs, widget.NewButton("Done!", func() {
-			//add a point to the user and reset the panel
+			app.Preferences().SetInt(
+				"connect",
+				app.Preferences().Int("connect") + 1,
+			)
 		}))
 		objs = append(objs, widget.NewButton("Skip", func() {
 			//dismiss the action by resetting the panel

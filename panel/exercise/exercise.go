@@ -12,7 +12,7 @@ var Active bool
 var TakeWalk bool
 var ticker *time.Ticker
 
-func Load(content *fyne.Container) []fyne.CanvasObject {
+func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	var objs []fyne.CanvasObject
 	var StopTicker = false
 

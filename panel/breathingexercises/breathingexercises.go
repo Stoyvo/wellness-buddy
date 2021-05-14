@@ -18,7 +18,7 @@ func fetchDefaultObjs() []fyne.CanvasObject{
 	return objs
 }
 
-func Load(content *fyne.Container) []fyne.CanvasObject {
+func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	objs := fetchDefaultObjs()
 
 	if Active {

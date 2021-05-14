@@ -20,7 +20,7 @@ var navList *widget.List
 
 type Panel struct {
 	Title	*widget.Label
-	Obj		func(content *fyne.Container) []fyne.CanvasObject
+	Obj		func(app fyne.App, content *fyne.Container) []fyne.CanvasObject
 }
 
 var PanelList = []Panel{
@@ -73,7 +73,7 @@ func loadApp(win fyne.Window) {
 	)
 
 	navList.OnSelected = func(id int) {
-		content.Objects = PanelList[id].Obj(content)
+		content.Objects = PanelList[id].Obj(App, content)
 		content.Resize(content.Layout.MinSize(content.Objects))
 		content.Layout.Layout(content.Objects, content.Size())
 	}

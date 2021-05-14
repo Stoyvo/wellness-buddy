@@ -8,7 +8,7 @@ import (
 
 var Active bool
 
-func Load(content *fyne.Container) []fyne.CanvasObject {
+func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	var objs []fyne.CanvasObject
 
 	objs = append(objs, widget.NewLabel("Chair Yoga"))

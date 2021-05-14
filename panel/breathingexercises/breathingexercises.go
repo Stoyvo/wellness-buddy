@@ -13,7 +13,7 @@ func fetchDefaultObjs() []fyne.CanvasObject{
 	objs = append(objs, widget.NewLabel("Breathing Exercises"))
 	//add youtube video link
 	u, _ := url.Parse("https://www.youtube.com/watch?v=wfDTp2GogaQ")
-	objs = append(objs, widget.NewHyperlink("Watch the \"Mindful Breathing Exercise\" on YouTube", u))
+	objs = append(objs, widget.NewHyperlink("Watch the \"Mindful Breathing Exercise\" video on YouTube", u))
 
 	return objs
 }

@@ -34,7 +34,7 @@ if [ -f wellness-buddy ]; then
 fi
 
 # Package the executable
-fyne package -os darwin -appBuild ${BUILD} -appID "com.bounteous.wellness-buddy" -appVersion "0.0.1" -executable "dist/wellness-buddy" -icon "assets/logo.png" -name "Wellness Buddy"
+${GOPATH}/bin/fyne package -os darwin -appBuild ${BUILD} -appID "com.bounteous.wellness-buddy" -appVersion "0.0.1" -executable "dist/wellness-buddy" -icon "assets/logo.png" -name "Wellness Buddy"
 
 # Clean up after building
 #if [ -f wellness-buddy ]; then

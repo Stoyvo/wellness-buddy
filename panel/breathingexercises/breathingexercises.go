@@ -24,7 +24,6 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	if Active {
 		objs = append(objs, widget.NewButton("Done!", func() {
 			//add a point to the user and reset the panel
-			//make button unavailable for 2 hours
 			objs = fetchDefaultObjs()
 			content.Objects = objs
 			content.Layout.Layout(content.Objects, content.Size())

@@ -30,6 +30,11 @@ func fetchDefaultObjs() []fyne.CanvasObject{
 func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	objs := fetchDefaultObjs()
 
+	//uncomment for Stretch Demo
+	//Active = true
+	//uncomment for Take a Walk Timer Demo
+	//TakeWalk = true
+
 	if Active {
 		objs = append(objs, widget.NewButton("Done!", func() {
 			//add a point to the user and reset the panel
@@ -48,6 +53,7 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	}
 
 	if TakeWalk {
+		//this was an attempt of fixing the timer disappearing while navigating - ignore all commented code below...I saved it in case it comes in use later
 		//if timerStarted {
 		//	objs = fetchDefaultObjs()
 		//	objs = append(objs, widget.NewButton("Stop", func() {

@@ -135,7 +135,7 @@ func dailyChallengeAction() {
 			fmt.Println(err.Error())
 		}
 	case 2:
-		challengeText = "Have a burnout exercise (1 minute of squats or jumping jacks). Feel free to share your experience on #b_active"
+		challengeText = "You have 1 minute of squats! Feel free to share your experience on #b_active"
 		note := gosxnotifier.NewNotification(challengeText)
 		//Optionally, set a title
 		note.Title = "Wellness Buddy"
@@ -150,7 +150,7 @@ func dailyChallengeAction() {
 			fmt.Println(err.Error())
 		}
 	case 3:
-		challengeText = "Have a jabs exercise. Feel free to share your experience #b_active"
+		challengeText = "You have 1 minute of jumping jacks! Feel free to share your experience on #b_active"
 		note := gosxnotifier.NewNotification(challengeText)
 		//Optionally, set a title
 		note.Title = "Wellness Buddy"

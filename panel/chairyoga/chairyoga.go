@@ -35,18 +35,7 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	u, _ := url.Parse("https://www.youtube.com/watch?v=m4t9nCW3630")
 	objs = append(objs, widget.NewHyperlink("Watch the \"10 Minute Chair Yoga Practice\" video on YouTube", u))
 
-	objs = append(objs, doneBtn)
-	objs = append(objs, skipBtn)
-
-	//uncomment for Chair Yoga Demo
-	//Active = true
-
-	if Active {
-		doneBtn.Show()
-		skipBtn.Show()
-		content.Refresh()
-	}
-
+	// Animation
 	imgContainer := container.NewCenter()
 	var imgFrames = []*canvas.Image{
 		canvas.NewImageFromResource(assets.ResourceChairyoga1Png),
@@ -68,6 +57,19 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 		}
 	}()
 	objs = append(objs, imgContainer)
+
+	// Buttons
+	objs = append(objs, doneBtn)
+	objs = append(objs, skipBtn)
+
+	//uncomment for Chair Yoga Demo
+	//Active = true
+
+	if Active {
+		doneBtn.Show()
+		skipBtn.Show()
+		content.Refresh()
+	}
 
 	return objs
 }

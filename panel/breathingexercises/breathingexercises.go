@@ -11,44 +11,30 @@ import (
 )
 
 var Active bool
+var doneBtn *widget.Button
+var skipBtn *widget.Button
 
-func fetchDefaultObjs() []fyne.CanvasObject{
+func init() {
+	doneBtn = widget.NewButton("Done!", hideBtns)
+	doneBtn.Hidden = true
+	skipBtn = widget.NewButton("Skip!", hideBtns)
+	skipBtn.Hidden = true
+}
+
+func hideBtns() {
+	Active = false
+	doneBtn.Hide()
+	skipBtn.Hide()
+}
+
+func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	var objs []fyne.CanvasObject
 	objs = append(objs, widget.NewLabel("Breathing Exercises"))
 	//add youtube video link
 	u, _ := url.Parse("https://www.youtube.com/watch?v=wfDTp2GogaQ")
 	objs = append(objs, widget.NewHyperlink("Watch the \"Mindful Breathing Exercise\" video on YouTube", u))
 
-	return objs
-}
-
-func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
-	objs := fetchDefaultObjs()
-
-	//uncomment for Breathing Exercise Demo
-	Active = true
-
-	if Active {
-		objs = append(objs, widget.NewButton("Done!", func() {
-			//add a point to the user and reset the panel
-			Active = false
-			objs = fetchDefaultObjs()
-			content.Objects = objs
-			content.Layout.Layout(content.Objects, content.Size())
-		}))
-
-		objs = append(objs, widget.NewButton("Skip", func() {
-			//dismiss the action by resetting the panel
-			Active = false
-			objs = fetchDefaultObjs()
-			content.Objects = objs
-			content.Layout.Layout(content.Objects, content.Size())
-		}))
-
-		content.Objects = objs
-		content.Layout.Layout(content.Objects, content.Size())
-	}
-
+	// Animation
 	imgContainer := container.NewCenter()
 	var imgFrames = []*canvas.Image{
 		canvas.NewImageFromResource(assets.ResourceBreathe1Png),
@@ -70,6 +56,19 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 		}
 	}()
 	objs = append(objs, imgContainer)
+
+	// Buttons
+	objs = append(objs, doneBtn)
+	objs = append(objs, skipBtn)
+
+	//uncomment for Breathing Exercise Demo
+	//Active = true
+
+	if Active {
+		doneBtn.Show()
+		skipBtn.Show()
+		content.Refresh()
+	}
 
 	return objs
 }

@@ -13,6 +13,9 @@ import (
 var Active bool
 var TakeWalk bool
 var ticker *time.Ticker
+var tickerStart = 1
+//var timerStarted = false
+//var timerStopped = false
 
 func fetchDefaultObjs() []fyne.CanvasObject{
 	var objs []fyne.CanvasObject
@@ -25,18 +28,19 @@ func fetchDefaultObjs() []fyne.CanvasObject{
 }
 
 func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
-	tickerStart := 1
 	objs := fetchDefaultObjs()
 
 	if Active {
 		objs = append(objs, widget.NewButton("Done!", func() {
 			//add a point to the user and reset the panel
+			Active = false
 			objs = fetchDefaultObjs()
 			content.Objects = objs
 			content.Layout.Layout(content.Objects, content.Size())
 		}))
 		objs = append(objs, widget.NewButton("Skip", func() {
 			//dismiss the action by resetting the panel
+			Active = false
 			objs = fetchDefaultObjs()
 			content.Objects = objs
 			content.Layout.Layout(content.Objects, content.Size())
@@ -44,34 +48,77 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	}
 
 	if TakeWalk {
-		objs = append(objs, widget.NewButton("Start", func() {
-			//start walk timer and show stop button
-			objs = fetchDefaultObjs()
-			ticker = time.NewTicker(time.Second * 1)
+		//if timerStarted {
+		//	objs = fetchDefaultObjs()
+		//	objs = append(objs, widget.NewButton("Stop", func() {
+		//		//start walk timer and show stop button
+		//		timerStopped = true
+		//		ticker.Stop()
+		//		objs = fetchDefaultObjs()
+		//		message := fmt.Sprint("Timer Stopped at: ", secondsToHuman(tickerStart))
+		//		objs = append(objs, widget.NewLabel(message))
+		//		content.Objects = objs
+		//		content.Layout.Layout(content.Objects, content.Size())
+		//	}))
+		//
+		//	timerLabel := widget.NewLabel("Timer:")
+		//	objs = append(objs, timerLabel)
+		//	content.Objects = objs
+		//	content.Layout.Layout(content.Objects, content.Size())
+		//
+		//	go func(timerLabel *widget.Label) {
+		//		for _ = range ticker.C {
+		//			message := fmt.Sprint("Timer: ", secondsToHuman(tickerStart))
+		//			timerLabel.SetText(message)
+		//			tickerStart++
+		//		}
+		//	}(timerLabel)
+		//}
+		//
+		//if timerStopped {
+		//	//start walk timer and show stop button
+		//	timerStopped = true
+		//	ticker.Stop()
+		//	objs = fetchDefaultObjs()
+		//	message := fmt.Sprint("Timer Stopped at: ", secondsToHuman(tickerStart))
+		//	objs = append(objs, widget.NewLabel(message))
+		//	content.Objects = objs
+		//	content.Layout.Layout(content.Objects, content.Size())
+		//}
 
-			objs = append(objs, widget.NewButton("Stop", func() {
+		//if !timerStarted && !timerStopped {
+			objs = append(objs, widget.NewButton("Start", func() {
 				//start walk timer and show stop button
-				ticker.Stop()
+				//timerStarted = true
 				objs = fetchDefaultObjs()
-				message := fmt.Sprint("Timer Stopped at: ", secondsToHuman(tickerStart))
-				objs = append(objs, widget.NewLabel(message))
+				ticker = time.NewTicker(time.Second * 1)
+
+				objs = append(objs, widget.NewButton("Stop", func() {
+					//start walk timer and show stop button
+					//timerStopped = true
+					TakeWalk = false
+					ticker.Stop()
+					objs = fetchDefaultObjs()
+					message := fmt.Sprint("Timer Stopped at: ", secondsToHuman(tickerStart))
+					objs = append(objs, widget.NewLabel(message))
+					content.Objects = objs
+					content.Layout.Layout(content.Objects, content.Size())
+				}))
+
+				timerLabel := widget.NewLabel("Timer:")
+				objs = append(objs, timerLabel)
 				content.Objects = objs
 				content.Layout.Layout(content.Objects, content.Size())
+
+				go func(timerLabel *widget.Label) {
+					for _ = range ticker.C {
+						message := fmt.Sprint("Timer: ", secondsToHuman(tickerStart))
+						timerLabel.SetText(message)
+						tickerStart++
+					}
+				}(timerLabel)
 			}))
-
-			timerLabel := widget.NewLabel("Timer:")
-			objs = append(objs, timerLabel)
-			content.Objects = objs
-			content.Layout.Layout(content.Objects, content.Size())
-
-			go func(timerLabel *widget.Label) {
-				for _ = range ticker.C {
-					message := fmt.Sprint("Timer: ", secondsToHuman(tickerStart))
-					timerLabel.SetText(message)
-					tickerStart++
-				}
-			}(timerLabel)
-		}))
+		//}
 	}
 
 	return objs

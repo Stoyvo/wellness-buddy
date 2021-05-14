@@ -40,7 +40,7 @@ func startJobs() {
 
 	// Call take a walk once a week, on a wednesday at 3:30PM
 	takeWalkJob := cron.New()
-	_, err = takeWalkJob.AddFunc("38 14 * * 5", takeWalkAction)
+	_, err = takeWalkJob.AddFunc("30 15 * * 3", takeWalkAction)
 
 	if err != nil {
 		return

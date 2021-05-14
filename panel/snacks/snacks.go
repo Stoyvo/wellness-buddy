@@ -29,7 +29,6 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 		objs = append(objs, widget.NewLabel(message))
 		content.Objects = objs
 		content.Layout.Layout(content.Objects, content.Size())
-		Snack = ""
 	}
 
 	if Active {
@@ -39,6 +38,7 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 			objs = fetchDefaultObjs()
 			content.Objects = objs
 			content.Layout.Layout(content.Objects, content.Size())
+			Snack = ""
 		}))
 		objs = append(objs, widget.NewButton("Skip", func() {
 			//dismiss the action by resetting the panel
@@ -46,6 +46,7 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 			objs = fetchDefaultObjs()
 			content.Objects = objs
 			content.Layout.Layout(content.Objects, content.Size())
+			Snack = ""
 		}))
 	}
 

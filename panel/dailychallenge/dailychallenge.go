@@ -14,9 +14,15 @@ var challengeLabel *widget.Label
 var doneBtn *widget.Button
 var skipBtn *widget.Button
 
-func init() {
+func initBtns(app fyne.App) {
 	challengeLabel = widget.NewLabel(ChallengeAction)
-	doneBtn = widget.NewButton("Done!", hideBtns)
+	doneBtn = widget.NewButton("Done!", func() {
+		app.Preferences().SetInt(
+			"challenge",
+			app.Preferences().Int("challenge") + 1,
+		)
+		hideBtns()
+	})
 	doneBtn.Hidden = true
 	skipBtn = widget.NewButton("Skip!", hideBtns)
 	skipBtn.Hidden = true
@@ -29,6 +35,7 @@ func hideBtns() {
 	skipBtn.Hide()
 }
 func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
+	initBtns(app)
 	var objs []fyne.CanvasObject
 
 	objs = append(objs, widget.NewLabel("Daily Challenge"))

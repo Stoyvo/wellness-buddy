@@ -17,12 +17,18 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 			widget.NewCard(
 				"Daily Challenges",
 				"",
-				widget.NewLabelWithStyle("123", fyne.TextAlignCenter, fyne.TextStyle{Bold: true}),
+				widget.NewLabelWithStyle(
+					strconv.Itoa(app.Preferences().Int("challenge")),
+					fyne.TextAlignCenter, fyne.TextStyle{Bold: true},
+				),
 			),
 			widget.NewCard(
 				"Breathing Exercises",
 				"",
-				widget.NewLabelWithStyle("123", fyne.TextAlignCenter, fyne.TextStyle{Bold: true}),
+				widget.NewLabelWithStyle(
+					strconv.Itoa(app.Preferences().Int("breathing")),
+					fyne.TextAlignCenter, fyne.TextStyle{Bold: true},
+				),
 			),
 		),
 		container.NewGridWithColumns(2,
@@ -44,7 +50,10 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 			widget.NewCard(
 				"Yoga",
 				"",
-				widget.NewLabelWithStyle("123", fyne.TextAlignCenter, fyne.TextStyle{Bold: true}),
+				widget.NewLabelWithStyle(
+					strconv.Itoa(app.Preferences().Int("yoga")),
+					fyne.TextAlignCenter, fyne.TextStyle{Bold: true},
+				),
 			),
 			widget.NewCard(
 				"Snacks",

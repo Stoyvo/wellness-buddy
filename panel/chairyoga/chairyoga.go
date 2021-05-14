@@ -14,8 +14,14 @@ var Active bool
 var doneBtn *widget.Button
 var skipBtn *widget.Button
 
-func init() {
-	doneBtn = widget.NewButton("Done!", hideBtns)
+func initBtns(app fyne.App) {
+	doneBtn = widget.NewButton("Done!", func() {
+		app.Preferences().SetInt(
+			"yoga",
+			app.Preferences().Int("yoga") + 1,
+		)
+		hideBtns()
+	})
 	doneBtn.Hidden = true
 	skipBtn = widget.NewButton("Skip!", hideBtns)
 	skipBtn.Hidden = true
@@ -28,6 +34,7 @@ func hideBtns() {
 }
 
 func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
+	initBtns(app)
 	var objs []fyne.CanvasObject
 
 	objs = append(objs, widget.NewLabel("Chair Yoga"))

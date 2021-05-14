@@ -31,6 +31,7 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 
 	objs = append(objs, widget.NewLabel("Remember to Hydrate"))
 
+	// Animate
 	imgContainer := container.NewCenter()
 	var imgFrames = []*canvas.Image{
 		canvas.NewImageFromResource(assets.ResourceWater1Png),
@@ -53,11 +54,12 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	}()
 	objs = append(objs, imgContainer)
 
+	// Buttons
 	objs = append(objs, doneBtn)
 	objs = append(objs, skipBtn)
 
 	//uncomment for Hydrate Demo
-	//Active = true
+	Active = true
 
 	if Active {
 		doneBtn.Show()

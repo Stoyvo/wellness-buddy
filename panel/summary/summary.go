@@ -56,13 +56,6 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 				),
 			),
 			widget.NewCard(
-				"Snacks",
-				"",
-				widget.NewLabelWithStyle("123", fyne.TextAlignCenter, fyne.TextStyle{Bold: true}),
-			),
-		),
-		container.NewGridWithColumns(1,
-			widget.NewCard(
 				"Connect",
 				"",
 				widget.NewLabelWithStyle(

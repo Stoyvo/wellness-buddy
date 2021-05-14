@@ -56,7 +56,7 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 			imgFrames = append(imgFrames, canvas.NewImageFromResource(assets.ResourceJumpingjacks1Png))
 			imgFrames = append(imgFrames, canvas.NewImageFromResource(assets.ResourceJumpingjacks2Png))
 		case 4:
-
+			imgFrames = append(imgFrames, canvas.NewImageFromResource(assets.ResourceBirdPng))
 		case 5:
 			imgFrames = append(imgFrames, canvas.NewImageFromResource(assets.ResourceHydrantPng))
 	}
@@ -83,6 +83,10 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	objs = append(objs, skipBtn)
 
 	//uncomment for Daily Challenge Demo
+	//ChallengeAction = "Take a picture of a tree. Feel free to share it on #opt_outside"
+	//ChallengeAction = "You have 1 minute of squats! Feel free to share your experience on #b_active"
+	//ChallengeAction = "You have 1 minute of jumping jacks! Feel free to share your experience on #b_active"
+	//ChallengeAction = "Take a picture of a bird. Feel free to share it on #photography"
 	//ChallengeAction = "Have a burnout exercise (1 minute of squats or jumping jacks). Feel free to share your experience on #b_active"
 
 	if ChallengeAction != "" {

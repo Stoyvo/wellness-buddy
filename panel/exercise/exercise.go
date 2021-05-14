@@ -3,7 +3,10 @@ package exercise
 import (
 	"fmt"
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/canvas"
+	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
+	"github.com/stoyvo/wellness-buddy/assets"
 	"math"
 	"net/url"
 	"strconv"
@@ -14,8 +17,6 @@ var Active bool
 var TakeWalk bool
 var ticker *time.Ticker
 var tickerStart = 1
-//var timerStarted = false
-//var timerStopped = false
 
 func fetchDefaultObjs() []fyne.CanvasObject{
 	var objs []fyne.CanvasObject
@@ -30,10 +31,34 @@ func fetchDefaultObjs() []fyne.CanvasObject{
 func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	objs := fetchDefaultObjs()
 
+	imgContainer := container.NewCenter()
+	var imgFrames = []*canvas.Image{
+		canvas.NewImageFromResource(assets.ResourceStretch1Png),
+		canvas.NewImageFromResource(assets.ResourceStretch2Png),
+		canvas.NewImageFromResource(assets.ResourceStretch3Png),
+		canvas.NewImageFromResource(assets.ResourceStretch4Png),
+	}
+	totalFrames := len(imgFrames)
+	go func() {
+		var i int
+		for {
+			if i >= totalFrames {
+				i=0
+			}
+			imgFrames[i].FillMode = canvas.ImageFillOriginal
+			imgContainer.Objects = []fyne.CanvasObject{imgFrames[i]}
+			imgContainer.Layout.Layout(imgContainer.Objects, imgContainer.Size())
+			content.Refresh()
+			time.Sleep(1 * time.Second)
+			i++
+		}
+	}()
+	objs = append(objs, imgContainer)
+
 	//uncomment for Stretch Demo
 	//Active = true
 	//uncomment for Take a Walk Timer Demo
-	//TakeWalk = true
+	TakeWalk = true
 
 	if Active {
 		objs = append(objs, widget.NewButton("Done!", func() {
@@ -57,78 +82,37 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	}
 
 	if TakeWalk {
-		//this was an attempt of fixing the timer disappearing while navigating - ignore all commented code below...I saved it in case it comes in use later
-		//if timerStarted {
-		//	objs = fetchDefaultObjs()
-		//	objs = append(objs, widget.NewButton("Stop", func() {
-		//		//start walk timer and show stop button
-		//		timerStopped = true
-		//		ticker.Stop()
-		//		objs = fetchDefaultObjs()
-		//		message := fmt.Sprint("Timer Stopped at: ", secondsToHuman(tickerStart))
-		//		objs = append(objs, widget.NewLabel(message))
-		//		content.Objects = objs
-		//		content.Layout.Layout(content.Objects, content.Size())
-		//	}))
-		//
-		//	timerLabel := widget.NewLabel("Timer:")
-		//	objs = append(objs, timerLabel)
-		//	content.Objects = objs
-		//	content.Layout.Layout(content.Objects, content.Size())
-		//
-		//	go func(timerLabel *widget.Label) {
-		//		for _ = range ticker.C {
-		//			message := fmt.Sprint("Timer: ", secondsToHuman(tickerStart))
-		//			timerLabel.SetText(message)
-		//			tickerStart++
-		//		}
-		//	}(timerLabel)
-		//}
-		//
-		//if timerStopped {
-		//	//start walk timer and show stop button
-		//	timerStopped = true
-		//	ticker.Stop()
-		//	objs = fetchDefaultObjs()
-		//	message := fmt.Sprint("Timer Stopped at: ", secondsToHuman(tickerStart))
-		//	objs = append(objs, widget.NewLabel(message))
-		//	content.Objects = objs
-		//	content.Layout.Layout(content.Objects, content.Size())
-		//}
+		objs = append(objs, widget.NewButton("Start", func() {
+			//start walk timer and show stop button
+			//timerStarted = true
+			objs = fetchDefaultObjs()
+			ticker = time.NewTicker(time.Second * 1)
 
-		//if !timerStarted && !timerStopped {
-			objs = append(objs, widget.NewButton("Start", func() {
+			objs = append(objs, widget.NewButton("Stop", func() {
 				//start walk timer and show stop button
-				//timerStarted = true
+				//timerStopped = true
+				TakeWalk = false
+				ticker.Stop()
 				objs = fetchDefaultObjs()
-				ticker = time.NewTicker(time.Second * 1)
-
-				objs = append(objs, widget.NewButton("Stop", func() {
-					//start walk timer and show stop button
-					//timerStopped = true
-					TakeWalk = false
-					ticker.Stop()
-					objs = fetchDefaultObjs()
-					message := fmt.Sprint("Timer Stopped at: ", secondsToHuman(tickerStart))
-					objs = append(objs, widget.NewLabel(message))
-					content.Objects = objs
-					content.Layout.Layout(content.Objects, content.Size())
-				}))
-
-				timerLabel := widget.NewLabel("Timer:")
-				objs = append(objs, timerLabel)
+				message := fmt.Sprint("Timer Stopped at: ", secondsToHuman(tickerStart))
+				objs = append(objs, widget.NewLabel(message))
 				content.Objects = objs
 				content.Layout.Layout(content.Objects, content.Size())
-
-				go func(timerLabel *widget.Label) {
-					for _ = range ticker.C {
-						message := fmt.Sprint("Timer: ", secondsToHuman(tickerStart))
-						timerLabel.SetText(message)
-						tickerStart++
-					}
-				}(timerLabel)
 			}))
-		//}
+
+			timerLabel := widget.NewLabel("Timer:")
+			objs = append(objs, timerLabel)
+			content.Objects = objs
+			content.Layout.Layout(content.Objects, content.Size())
+
+			go func(timerLabel *widget.Label) {
+				for _ = range ticker.C {
+					message := fmt.Sprint("Timer: ", secondsToHuman(tickerStart))
+					timerLabel.SetText(message)
+					tickerStart++
+				}
+			}(timerLabel)
+		}))
 	}
 
 	return objs

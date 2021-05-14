@@ -20,7 +20,6 @@ func fetchDefaultObjs() []fyne.CanvasObject{
 	jokeImg.FillMode = canvas.ImageFillOriginal
 	objs = append(objs, jokeImg)
 
-
 	return objs
 }
 
@@ -28,8 +27,8 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	objs := fetchDefaultObjs()
 
 	//uncomment for Connect Demo
-	//Active = true
-	//Joke = "I couldn't figure out how the seat belt worked. Then it just clicked."
+	Active = true
+	Joke = "I couldn't figure out how the seat belt worked. Then it just clicked."
 
 	if Joke != "" {
 		message := fmt.Sprint("Perhaps start with a joke? Like: \"", Joke, "\"")

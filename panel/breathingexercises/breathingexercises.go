@@ -69,7 +69,7 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	objs = append(objs, skipBtn)
 
 	//uncomment for Breathing Exercise Demo
-	//Active = true
+	Active = true
 
 	if Active {
 		doneBtn.Show()

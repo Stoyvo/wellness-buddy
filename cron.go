@@ -60,7 +60,7 @@ func startJobs() {
 
 	// Call hydrateReminder
 	hydrateReminderJob := cron.New()
-	_, err = hydrateReminderJob.AddFunc("@every 30m", hydrateReminderAction)
+	_, err = hydrateReminderJob.AddFunc("@every 1m", hydrateReminderAction)
 
 	if err != nil {
 		return

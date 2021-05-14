@@ -2,7 +2,9 @@ package snacks
 
 import (
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/widget"
+	"github.com/stoyvo/wellness-buddy/assets"
 )
 
 var Active bool
@@ -30,8 +32,12 @@ func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 
 	objs = append(objs, widget.NewLabel("Time for a healthy snack!"))
 
+	jokeImg := canvas.NewImageFromResource(assets.ResourceHealthyPng)
+	jokeImg.FillMode = canvas.ImageFillOriginal
+	objs = append(objs, jokeImg)
+
 	//uncomment for Snack Demo
-	//Active = true
+	Active = true
 	//Snack = "a Baby Carrot"
 	if Snack != "" {
 		snackLabel.SetText("How about " + Snack + "?")

@@ -26,5 +26,8 @@ func Load(content *fyne.Container) []fyne.CanvasObject {
 		}))
 	}
 
+	content.Objects = objs
+	content.Layout.Layout(content.Objects, content.Size())
+
 	return objs
 }

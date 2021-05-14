@@ -20,7 +20,7 @@ import (
 func startJobs() {
 	// Call dailyChallenge at 2PM
 	dailyChallengeJob := cron.New()
-	_, err := dailyChallengeJob.AddFunc("0 14 * * 1-5", dailyChallengeAction)
+	_, err := dailyChallengeJob.AddFunc("00 14 * * 1-5", dailyChallengeAction)
 
 	if err != nil {
 		return
@@ -188,11 +188,8 @@ func dailyChallengeAction() {
 	}
 
 	//load the daily challenge panel in the app
-	navList.Select(1)
 	dailychallenge.ChallengeAction = challengeText
-	content.Objects = dailychallenge.Load()
-	content.Resize(content.Layout.MinSize(content.Objects))
-	content.Layout.Layout(content.Objects, content.Size())
+	navList.Select(1)
 }
 
 func breathingExerciseAction() {
@@ -215,11 +212,8 @@ func breathingExerciseAction() {
 	}
 
 	//load breathing exercises panel in the app
-	navList.Select(2)
 	breathingexercises.Active = true
-	content.Objects = breathingexercises.Load()
-	content.Resize(content.Layout.MinSize(content.Objects))
-	content.Layout.Layout(content.Objects, content.Size())
+	navList.Select(2)
 }
 
 func takeWalkAction() {
@@ -243,11 +237,8 @@ func takeWalkAction() {
 	}
 
 	//load exercise panel
-	navList.Select(3)
 	exercise.TakeWalk = true
-	content.Objects = exercise.Load()
-	content.Resize(content.Layout.MinSize(content.Objects))
-	content.Layout.Layout(content.Objects, content.Size())
+	navList.Select(3)
 }
 
 
@@ -271,11 +262,8 @@ func stretchAction() {
 	}
 
 	//load exercise panel
-	navList.Select(3)
 	exercise.Active = true
-	content.Objects = exercise.Load()
-	content.Resize(content.Layout.MinSize(content.Objects))
-	content.Layout.Layout(content.Objects, content.Size())
+	navList.Select(3)
 }
 
 func hydrateReminderAction() {
@@ -298,11 +286,8 @@ func hydrateReminderAction() {
 	}
 
 	//load the hydration panel in the app
-	navList.Select(4)
 	hydrate.Active = true
-	content.Objects = hydrate.Load()
-	content.Resize(content.Layout.MinSize(content.Objects))
-	content.Layout.Layout(content.Objects, content.Size())
+	navList.Select(4)
 }
 
 func chairYogaAction() {
@@ -325,11 +310,8 @@ func chairYogaAction() {
 	}
 
 	//load chair yoga panel
-	navList.Select(5)
 	chairyoga.Active = true
-	content.Objects = chairyoga.Load()
-	content.Resize(content.Layout.MinSize(content.Objects))
-	content.Layout.Layout(content.Objects, content.Size())
+	navList.Select(5)
 }
 
 func healthySnackAction() {
@@ -361,12 +343,9 @@ func healthySnackAction() {
 	}
 
 	//load snack panel
-	navList.Select(6)
 	snacks.Active = true
 	snacks.Snack = selectedSnack
-	content.Objects = snacks.Load()
-	content.Resize(content.Layout.MinSize(content.Objects))
-	content.Layout.Layout(content.Objects, content.Size())
+	navList.Select(6)
 }
 
 func messageJokeAction() {
@@ -403,10 +382,7 @@ func messageJokeAction() {
 	}
 
 	//load connect panel
-	navList.Select(7)
 	connect.Active = true
 	connect.Joke = joke
-	content.Objects = connect.Load()
-	content.Resize(content.Layout.MinSize(content.Objects))
-	content.Layout.Layout(content.Objects, content.Size())
+	navList.Select(7)
 }

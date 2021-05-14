@@ -8,8 +8,8 @@ import (
 	"time"
 )
 
-var Active = true
-var TakeWalk = true
+var Active bool
+var TakeWalk bool
 var ticker *time.Ticker
 
 func Load(content *fyne.Container) []fyne.CanvasObject {

@@ -1,53 +1,51 @@
 package snacks
 
 import (
-	"fmt"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/widget"
 )
 
 var Active bool
 var Snack string
+var snackLabel *widget.Label
+var doneBtn *widget.Button
+var skipBtn *widget.Button
 
-func fetchDefaultObjs() []fyne.CanvasObject{
+func init() {
+	snackLabel = widget.NewLabel("")
+	doneBtn = widget.NewButton("Done!", hideBtns)
+	doneBtn.Hidden = true
+	skipBtn = widget.NewButton("Skip!", hideBtns)
+	skipBtn.Hidden = true
+}
+
+func hideBtns() {
+	Active = false
+	doneBtn.Hide()
+	skipBtn.Hide()
+}
+
+func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
 	var objs []fyne.CanvasObject
 
 	objs = append(objs, widget.NewLabel("Time for a healthy snack!"))
 
-	return objs
-}
-
-func Load(app fyne.App, content *fyne.Container) []fyne.CanvasObject {
-	objs := fetchDefaultObjs()
-
 	//uncomment for Snack Demo
 	//Active = true
 	//Snack = "a Baby Carrot"
-
 	if Snack != "" {
-		message := fmt.Sprint("How about ", Snack)
-		objs = append(objs, widget.NewLabel(message))
-		content.Objects = objs
-		content.Layout.Layout(content.Objects, content.Size())
+		snackLabel.SetText("How about " + Snack + "?")
 	}
+	objs = append(objs, snackLabel)
+
+	// Buttons
+	objs = append(objs, doneBtn)
+	objs = append(objs, skipBtn)
 
 	if Active {
-		objs = append(objs, widget.NewButton("Done!", func() {
-			//add a point to the user and reset the panel
-			Active = false
-			objs = fetchDefaultObjs()
-			content.Objects = objs
-			content.Layout.Layout(content.Objects, content.Size())
-			Snack = ""
-		}))
-		objs = append(objs, widget.NewButton("Skip", func() {
-			//dismiss the action by resetting the panel
-			Active = false
-			objs = fetchDefaultObjs()
-			content.Objects = objs
-			content.Layout.Layout(content.Objects, content.Size())
-			Snack = ""
-		}))
+		doneBtn.Show()
+		skipBtn.Show()
+		content.Refresh()
 	}
 
 	return objs

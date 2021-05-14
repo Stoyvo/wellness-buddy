@@ -1,16 +1,20 @@
 package exercise
 
 import (
+	"fmt"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/widget"
 	"net/url"
+	"time"
 )
 
 var Active bool
 var TakeWalk bool
+var ticker *time.Ticker
 
 func Load() []fyne.CanvasObject {
 	var objs []fyne.CanvasObject
+	var StopTicker = false
 
 	objs = append(objs, widget.NewLabel("Time to exercise"))
 	//add youtube video link
@@ -29,6 +33,27 @@ func Load() []fyne.CanvasObject {
 	if TakeWalk {
 		objs = append(objs, widget.NewButton("Start", func() {
 			//start walk timer and show stop button
+			tickerStart := 1
+			StopTicker = true
+			ticker = time.NewTicker(time.Second * 1)
+
+			for{
+				select{
+				case <-ticker.C:
+					fmt.Println(tickerStart)
+					message := fmt.Sprint("Timer: \r\n", tickerStart)
+					objs = append(objs, widget.NewLabel(message))
+					tickerStart++
+				}
+			}
+		}))
+	}
+
+	if StopTicker {
+		objs = append(objs, widget.NewButton("Stop", func() {
+			//start walk timer and show stop button
+			StopTicker = false
+			ticker.Stop()
 		}))
 	}
 

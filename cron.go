@@ -6,6 +6,7 @@ import (
 	"github.com/robfig/cron/v3"
 	"github.com/stoyvo/wellness-buddy/panel/breathingexercises"
 	"github.com/stoyvo/wellness-buddy/panel/chairyoga"
+	"github.com/stoyvo/wellness-buddy/panel/connect"
 	"github.com/stoyvo/wellness-buddy/panel/dailychallenge"
 	"github.com/stoyvo/wellness-buddy/panel/exercise"
 	"github.com/stoyvo/wellness-buddy/panel/hydrate"
@@ -89,7 +90,7 @@ func startJobs() {
 
 	// Call message a loved one action once a week, on a tuesday at 4:30PM
 	messageJokeJob := cron.New()
-	_, err = messageJokeJob.AddFunc("11 20 * * 4", messageJokeAction)
+	_, err = messageJokeJob.AddFunc("56 10 * * 5", messageJokeAction)
 
 	if err != nil {
 		return
@@ -213,7 +214,7 @@ func breathingExerciseAction() {
 		fmt.Println(err.Error())
 	}
 
-	//load breathing panel in the app
+	//load breathing exercises panel in the app
 	navList.Select(2)
 	breathingexercises.Active = true
 	content.Objects = breathingexercises.Load()
@@ -241,7 +242,7 @@ func takeWalkAction() {
 		fmt.Println(err.Error())
 	}
 
-	//load walk panel
+	//load exercise panel
 	navList.Select(3)
 	exercise.TakeWalk = true
 	content.Objects = exercise.Load()
@@ -269,7 +270,7 @@ func stretchAction() {
 		fmt.Println(err.Error())
 	}
 
-	//load summary panel
+	//load exercise panel
 	navList.Select(3)
 	exercise.Active = true
 	content.Objects = exercise.Load()
@@ -401,6 +402,11 @@ func messageJokeAction() {
 		fmt.Println(err.Error())
 	}
 
-	//load summary panel
-	navList.Select(0)
+	//load connect panel
+	navList.Select(7)
+	connect.Active = true
+	connect.Joke = joke
+	content.Objects = connect.Load()
+	content.Resize(content.Layout.MinSize(content.Objects))
+	content.Layout.Layout(content.Objects, content.Size())
 }

@@ -7,6 +7,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 	"github.com/stoyvo/wellness-buddy/panel/breathingexercises"
 	"github.com/stoyvo/wellness-buddy/panel/chairyoga"
+	"github.com/stoyvo/wellness-buddy/panel/connect"
 	"github.com/stoyvo/wellness-buddy/panel/dailychallenge"
 	"github.com/stoyvo/wellness-buddy/panel/exercise"
 	"github.com/stoyvo/wellness-buddy/panel/hydrate"
@@ -50,6 +51,10 @@ var PanelList = []Panel{
 	{
 		widget.NewLabel("Snacks"),
 		snacks.Load,
+	},
+	{
+		widget.NewLabel("Connect"),
+		connect.Load,
 	},
 }
 

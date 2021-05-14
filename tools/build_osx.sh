@@ -35,6 +35,8 @@ fi
 
 # Package the executable
 ${GOPATH}/bin/fyne package -os darwin -appBuild ${BUILD} -appID "com.bounteous.wellness-buddy" -appVersion "0.0.1" -executable "dist/wellness-buddy" -icon "assets/logo.png" -name "Wellness Buddy"
+cp -f "${GO_SRC_DIR}/assets/logo.png" "${GO_SRC_DIR}/Wellness Buddy.app/Contents/MacOS/logo.png"
+
 
 # Clean up after building
 #if [ -f wellness-buddy ]; then

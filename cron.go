@@ -70,7 +70,7 @@ func startJobs() {
 
 	// Call chairYoga twice a week at 1PM
 	chairYogaJob := cron.New()
-	_, err = chairYogaJob.AddFunc("00 13 * * 1, 5", chairYogaAction)
+	_, err = chairYogaJob.AddFunc("00 13 * * 1,5", chairYogaAction)
 
 	if err != nil {
 		return

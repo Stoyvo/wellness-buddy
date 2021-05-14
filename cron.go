@@ -4,7 +4,12 @@ import (
 	"fmt"
 	"github.com/deckarep/gosx-notifier"
 	"github.com/robfig/cron/v3"
+	"github.com/stoyvo/wellness-buddy/panel/breathingexercises"
+	"github.com/stoyvo/wellness-buddy/panel/chairyoga"
 	"github.com/stoyvo/wellness-buddy/panel/dailychallenge"
+	"github.com/stoyvo/wellness-buddy/panel/exercise"
+	"github.com/stoyvo/wellness-buddy/panel/hydrate"
+	"github.com/stoyvo/wellness-buddy/panel/snacks"
 	"io/ioutil"
 	"math/rand"
 	"net/http"
@@ -42,6 +47,16 @@ func startJobs() {
 
 	takeWalkJob.Start()
 
+	// Call stretch at 10AM and 3PM each weekday
+	stretchJob := cron.New()
+	_, err = stretchJob.AddFunc("0 10,15 * * 1-5", stretchAction)
+
+	if err != nil {
+		return
+	}
+
+	stretchJob.Start()
+
 	// Call hydrateReminder
 	hydrateReminderJob := cron.New()
 	_, err = hydrateReminderJob.AddFunc("@every 30m", hydrateReminderAction)
@@ -71,16 +86,6 @@ func startJobs() {
 	}
 
 	healthySnackJob.Start()
-
-	// Call stretch at 10AM and 3PM each weekday
-	stretchJob := cron.New()
-	_, err = stretchJob.AddFunc("0 10,15 * * 1-5", stretchAction)
-
-	if err != nil {
-		return
-	}
-
-	stretchJob.Start()
 
 	// Call message a loved one action once a week, on a tuesday at 4:30PM
 	messageJokeJob := cron.New()
@@ -210,6 +215,10 @@ func breathingExerciseAction() {
 
 	//load breathing panel in the app
 	navList.Select(2)
+	breathingexercises.Active = true
+	content.Objects = breathingexercises.Load()
+	content.Resize(content.Layout.MinSize(content.Objects))
+	content.Layout.Layout(content.Objects, content.Size())
 }
 
 func takeWalkAction() {
@@ -234,6 +243,38 @@ func takeWalkAction() {
 
 	//load walk panel
 	navList.Select(3)
+	exercise.Active = true
+	content.Objects = exercise.Load()
+	content.Resize(content.Layout.MinSize(content.Objects))
+	content.Layout.Layout(content.Objects, content.Size())
+}
+
+
+func stretchAction() {
+	//display os notification to complete the stretch exercise, clicking on the notification should:
+	//open the app on the corresponding panel with the youtube link and a button for 'done'
+	//add the point if pressed 'done' and disable that button
+	//then, run cron for 2 hours which will re-enable the button
+	note := gosxnotifier.NewNotification("Stop and do some stretches - you know you want to!")
+	//Optionally, set a title
+	note.Title = "Wellness Buddy"
+	//Optionally, set a sound from a predefined set.
+	note.Sound = gosxnotifier.Default
+	note.Link  = "com.bounteous.wellness-buddy"
+	//Then, push the notification
+	err := note.Push()
+
+	//If necessary, check error
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	//load summary panel
+	navList.Select(3)
+	exercise.Active = true
+	content.Objects = exercise.Load()
+	content.Resize(content.Layout.MinSize(content.Objects))
+	content.Layout.Layout(content.Objects, content.Size())
 }
 
 func hydrateReminderAction() {
@@ -257,6 +298,10 @@ func hydrateReminderAction() {
 
 	//load the hydration panel in the app
 	navList.Select(4)
+	hydrate.Active = true
+	content.Objects = hydrate.Load()
+	content.Resize(content.Layout.MinSize(content.Objects))
+	content.Layout.Layout(content.Objects, content.Size())
 }
 
 func chairYogaAction() {
@@ -280,11 +325,15 @@ func chairYogaAction() {
 
 	//load chair yoga panel
 	navList.Select(5)
+	chairyoga.Active = true
+	content.Objects = chairyoga.Load()
+	content.Resize(content.Layout.MinSize(content.Objects))
+	content.Layout.Layout(content.Objects, content.Size())
 }
 
 func healthySnackAction() {
-	snacks := make([]string, 0)
-	snacks = append(snacks,
+	snacksOpts := make([]string, 0)
+	snacksOpts = append(snacksOpts,
 		"a Baby Carrot",
 		"a Celery stick",
 		"an Apple",
@@ -294,7 +343,7 @@ func healthySnackAction() {
 	//open the app on the corresponding panel with a healthy snack suggestion from the random list up top
 	//and a button for 'done'
 	//clicking the 'done' button will add the point
-	message := fmt.Sprint("Stop and eat something healthy, like ", snacks[rand.Intn(len(snacks))], "- you deserve it!")
+	message := fmt.Sprint("Stop and eat something healthy, like ", snacksOpts[rand.Intn(len(snacksOpts))], "- you deserve it!")
 	note := gosxnotifier.NewNotification(message)
 	//Optionally, set a title
 	note.Title = "Wellness Buddy"
@@ -311,29 +360,10 @@ func healthySnackAction() {
 
 	//load snack panel
 	navList.Select(6)
-}
-
-func stretchAction() {
-	//display os notification to complete the stretch exercise, clicking on the notification should:
-	//open the app on the corresponding panel with the youtube link and a button for 'done'
-	//add the point if pressed 'done' and disable that button
-	//then, run cron for 2 hours which will re-enable the button
-	note := gosxnotifier.NewNotification("Stop and do some stretches - you know you want to!")
-	//Optionally, set a title
-	note.Title = "Wellness Buddy"
-	//Optionally, set a sound from a predefined set.
-	note.Sound = gosxnotifier.Default
-	note.Link  = "com.bounteous.wellness-buddy"
-	//Then, push the notification
-	err := note.Push()
-
-	//If necessary, check error
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	//load summary panel
-	navList.Select(0)
+	snacks.Active = true
+	content.Objects = snacks.Load()
+	content.Resize(content.Layout.MinSize(content.Objects))
+	content.Layout.Layout(content.Objects, content.Size())
 }
 
 func messageJokeAction() {

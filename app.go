@@ -5,6 +5,11 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
+	"github.com/stoyvo/wellness-buddy/panel/breathingexercises"
+	"github.com/stoyvo/wellness-buddy/panel/chairyoga"
+	"github.com/stoyvo/wellness-buddy/panel/exercise"
+	"github.com/stoyvo/wellness-buddy/panel/hydrate"
+	"github.com/stoyvo/wellness-buddy/panel/snacks"
 
 	"github.com/stoyvo/wellness-buddy/panel/dailychallenge"
 	"github.com/stoyvo/wellness-buddy/panel/summary"
@@ -28,19 +33,24 @@ var PanelList = []Panel{
 		dailychallenge.Load,
 	},
 	{
-		Title: widget.NewLabel("Breathing Exercises"),
+		widget.NewLabel("Breathing Exercises"),
+		breathingexercises.Load,
 	},
 	{
-		Title: widget.NewLabel("Exercise"),
+		widget.NewLabel("Exercise"),
+		exercise.Load,
 	},
 	{
-		Title: widget.NewLabel("Hydrate"),
+		widget.NewLabel("Hydrate"),
+		hydrate.Load,
 	},
 	{
-		Title: widget.NewLabel("Yoga"),
+		widget.NewLabel("Chair Yoga"),
+		chairyoga.Load,
 	},
 	{
-		Title: widget.NewLabel("Snacks"),
+		widget.NewLabel("Snacks"),
+		snacks.Load,
 	},
 }
 

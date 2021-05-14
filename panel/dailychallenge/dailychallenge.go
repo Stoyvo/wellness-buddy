@@ -20,7 +20,7 @@ func Load() []fyne.CanvasObject {
 			//add a point to the user and reset the panel
 		}))
 		objs = append(objs, widget.NewButton("Skip", func() {
-			//dismiss the action by reseting the panel
+			//dismiss the action by resetting the panel
 		}))
 	}
 

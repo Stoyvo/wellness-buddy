@@ -243,7 +243,7 @@ func takeWalkAction() {
 
 	//load walk panel
 	navList.Select(3)
-	exercise.Active = true
+	exercise.TakeWalk = true
 	content.Objects = exercise.Load()
 	content.Resize(content.Layout.MinSize(content.Objects))
 	content.Layout.Layout(content.Objects, content.Size())
@@ -343,7 +343,8 @@ func healthySnackAction() {
 	//open the app on the corresponding panel with a healthy snack suggestion from the random list up top
 	//and a button for 'done'
 	//clicking the 'done' button will add the point
-	message := fmt.Sprint("Stop and eat something healthy, like ", snacksOpts[rand.Intn(len(snacksOpts))], "- you deserve it!")
+	selectedSnack := snacksOpts[rand.Intn(len(snacksOpts))]
+	message := fmt.Sprint("Stop and eat something healthy, like ", selectedSnack, "- you deserve it!")
 	note := gosxnotifier.NewNotification(message)
 	//Optionally, set a title
 	note.Title = "Wellness Buddy"
@@ -361,6 +362,7 @@ func healthySnackAction() {
 	//load snack panel
 	navList.Select(6)
 	snacks.Active = true
+	snacks.Snack = selectedSnack
 	content.Objects = snacks.Load()
 	content.Resize(content.Layout.MinSize(content.Objects))
 	content.Layout.Layout(content.Objects, content.Size())

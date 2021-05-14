@@ -7,11 +7,10 @@ import (
 	"fyne.io/fyne/v2/widget"
 	"github.com/stoyvo/wellness-buddy/panel/breathingexercises"
 	"github.com/stoyvo/wellness-buddy/panel/chairyoga"
+	"github.com/stoyvo/wellness-buddy/panel/dailychallenge"
 	"github.com/stoyvo/wellness-buddy/panel/exercise"
 	"github.com/stoyvo/wellness-buddy/panel/hydrate"
 	"github.com/stoyvo/wellness-buddy/panel/snacks"
-
-	"github.com/stoyvo/wellness-buddy/panel/dailychallenge"
 	"github.com/stoyvo/wellness-buddy/panel/summary"
 )
 

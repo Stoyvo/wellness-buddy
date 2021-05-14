@@ -314,7 +314,7 @@ func chairYogaAction() {
 	navList.Select(5)
 }
 
-func healthySnackAction() {
+func randomizeSnack() string {
 	snacksOpts := make([]string, 0)
 	snacksOpts = append(snacksOpts,
 		"a Baby Carrot",
@@ -322,11 +322,16 @@ func healthySnackAction() {
 		"an Apple",
 		"some Buckwheat",
 		"a Cucumber")
+
+	return snacksOpts[rand.Intn(len(snacksOpts))]
+}
+
+func healthySnackAction() {
 	//display os notification to eat a healthy snack, clicking on the notification should:
 	//open the app on the corresponding panel with a healthy snack suggestion from the random list up top
 	//and a button for 'done'
 	//clicking the 'done' button will add the point
-	selectedSnack := snacksOpts[rand.Intn(len(snacksOpts))]
+	selectedSnack := randomizeSnack()
 	message := fmt.Sprint("Stop and eat something healthy, like ", selectedSnack, "- you deserve it!")
 	note := gosxnotifier.NewNotification(message)
 	//Optionally, set a title
@@ -348,7 +353,7 @@ func healthySnackAction() {
 	navList.Select(6)
 }
 
-func messageJokeAction() {
+func fetchDadJoke() string {
 	client := &http.Client{}
 	req, _ := http.NewRequest("GET", "https://icanhazdadjoke.com/", nil)
 	req.Header.Set("User-Agent", "Wellness Buddy (https://github.com/Stoyvo/wellness-buddy)")//required header
@@ -360,12 +365,15 @@ func messageJokeAction() {
 		fmt.Println(err)
 	}
 
+	return string(responseData)
+}
+
+func messageJokeAction() {
 	//display os notification to message a joke to a loved one, clicking on the notification should:
 	//open the app on the corresponding panel with a joke pulled from https://icanhazdadjoke.com/api
 	//and a button for 'done'
 	//clicking the 'done' button will add the point
-	joke := string(responseData)
-	fmt.Println(joke)
+	joke := fetchDadJoke()
 	message := fmt.Sprint("Reach out to a loved one, perhaps - with a joke? \r\n \"", joke, "\"")
 	note := gosxnotifier.NewNotification(message)
 	//Optionally, set a title
@@ -374,7 +382,7 @@ func messageJokeAction() {
 	note.Sound = gosxnotifier.Default
 	note.Link  = "com.bounteous.wellness-buddy"
 	//Then, push the notification
-	err = note.Push()
+	err := note.Push()
 
 	//If necessary, check error
 	if err != nil {
